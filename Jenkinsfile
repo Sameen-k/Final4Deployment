@@ -23,13 +23,12 @@ pipeline {
 
         stage('Build Frontend') {
             steps {
-                dir('frontend') {
-                    sh 'docker build -t morenodoesinfra/d8-frontend:v1 -f Dockerfile.frontend ..'
-                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                    sh 'docker push morenodoesinfra/d8-frontend:v1'
+                sh 'docker build -t morenodoesinfra/d8-frontend:v1 -f Dockerfile.frontend .'
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                sh 'docker push morenodoesinfra/d8-frontend:v1'
                 }
             }
-        }
+        
 
         stage('Deploy to EKS') {
             agent {
@@ -62,6 +61,9 @@ pipeline {
                         """
                     }
                 }
+            }
+        }
+    }
             }
         }
     }
