@@ -8,7 +8,7 @@ pipeline {
         AWS_EKS_CLUSTER_NAME = 'D9cluster'
         AWS_EKS_REGION = 'us-east-1'
         KUBE_MANIFESTS_DIR = '/home/ubuntu/c4_deployment-9/KUBE_MANIFEST'
-        SLACK_WEBHOOK_URL = ''
+        SLACK_WEBHOOK_CREDENTIALS = credentials('your-slack-webhook-credentials-id')
     }          
 
 
@@ -50,14 +50,11 @@ pipeline {
         stage('Slack Notification') {
             steps {
                 script {
-                    withCredentials([
-                        string(credentialsId: 'AWS_ACCESS_KEY', variable: 'aws_access_key'),
-                        string(credentialsId: 'AWS_SECRET_KEY', variable: 'aws_secret_key')
-                    ]) {
+                    withCredentials([string(credentialsId: SLACK_WEBHOOK_CREDENTIALS, variable: 'slackWebhookUrl')]) {
                         sh """
                             curl -X POST -H 'Content-type: application/json' \
                             --data '{"text":"Jenkins Pipeline Complete!"}' \
-                            ${SLACK_WEBHOOK_URL}
+                            ${slackWebhookUrl}
                         """
                     }
                 }
