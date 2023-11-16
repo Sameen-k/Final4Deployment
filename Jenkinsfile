@@ -4,10 +4,10 @@ pipeline {
     }
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('username-dockerhub')
+        DOCKERHUB_CREDENTIALS = credentials('morenodoesinfra-dockerhub')
         AWS_EKS_CLUSTER_NAME = ''
-        AWS_EKS_REGION = 'US-East-1'
-        KUBE_MANIFESTS_DIR = 'path to manifest files'
+        AWS_EKS_REGION = 'us-east-1'
+        KUBE_MANIFESTS_DIR = '/home/ubuntu/c4_deployment-9/KUBE_MANIFEST'
         SLACK_WEBHOOK_URL = 'https://hooks.slack.com/services/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'
     }          
 
@@ -15,18 +15,18 @@ pipeline {
     stages {
         stage('Build Backend') {
             steps {
-                sh 'docker build -t user/image.'
+                sh 'docker build -t morenodoesinfra/d8-backend:v1.'
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker push user/image'
+                sh 'docker push morenodoesinfra/d8-backend:v1'
             }
         }
 
         stage('Build Frontend') {
             steps {
                 dir('frontend') {
-                    sh 'docker build -t user/image .'
+                    sh 'docker build -t morenodoesinfra/d8-frontend:v1 .'
                     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                    sh 'docker push user/image'
+                    sh 'docker push morenodoesinfra/d8-frontend:v1'
                 }
             }
         }
