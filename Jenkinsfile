@@ -5,7 +5,7 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('morenodoesinfra-dockerhub')
-        AWS_EKS_CLUSTER_NAME = 'D9cluster'
+        AWS_EKS_CLUSTER_NAME = 'D9Cluster'
         AWS_EKS_REGION = 'us-east-1'
         KUBE_MANIFESTS_DIR = '/home/ubuntu/c4_deployment-9/KUBE_MANIFEST'
         SLACK_WEBHOOK_CREDENTIALS = credentials('SLACK_WEBHOOK_CREDENTIALS')
@@ -23,7 +23,7 @@ pipeline {
 
         stage('Build Frontend') {
             steps {
-                sh 'docker build -t morenodoesinfra/d8-frontend:v1 -f Dockerfile.frontend .'
+                sh 'docker build -t morenodoesinfra/d8-frontend:v3 -f Dockerfile.frontend .'
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 sh 'docker push morenodoesinfra/d8-frontend:v1'
                 }
@@ -58,9 +58,6 @@ pipeline {
                         """
                     }
                 }
-            }
-        }
-    }
             }
         }
     }

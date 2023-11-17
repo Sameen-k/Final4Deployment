@@ -13,14 +13,14 @@ resource "aws_instance" "Dep9JenkinsManager" {
   ami = var.ami
   instance_type = var.instance_type
   availability_zone = "us-east-1a"
-  vpc_security_group_ids = ["sg-08d4347ac732ab2a4"]
+  vpc_security_group_ids = ["sg-0e9087eb7d47d1019"]
   associate_public_ip_address = true
   key_name = var.key_name
 
   user_data = "${file("jenkins-deadsnakes2.sh")}"
 
   tags = {
-    Name : "Dep9JenkinsManager"
+    Name : "Dep9JenkinsManager_"
   }
 }
 #
@@ -33,14 +33,14 @@ resource "aws_instance" "Dep9DockerAgent" {
   ami = var.ami
   instance_type = var.instance_type
   availability_zone = "us-east-1a"
-  vpc_security_group_ids = ["sg-08d4347ac732ab2a4"]
+  vpc_security_group_ids = ["sg-0e9087eb7d47d1019"]
   associate_public_ip_address = true
   key_name = var.key_name
 
   user_data = "${file("dockeragent2.sh")}"
 
   tags = {
-    Name : "Dep9DockerAgent"
+    Name : "Dep9DockerAgent_"
   }
 }
 #
@@ -52,14 +52,14 @@ resource "aws_instance" "D9EKSAgent" {
   ami = var.ami
   instance_type = var.instance_type
   availability_zone = "us-east-1a"
-  vpc_security_group_ids = ["sg-08d4347ac732ab2a4"]
+  vpc_security_group_ids = ["sg-0e9087eb7d47d1019"]
   associate_public_ip_address = true
   key_name = var.key_name
 
   user_data = "${file("eks-jre.sh")}"
 
   tags = {
-    Name : "D9EKSAgent"
+    Name : "D9EKSAgent_"
   }
 }
 

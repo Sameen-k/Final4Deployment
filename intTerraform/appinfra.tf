@@ -6,9 +6,9 @@ provider "aws" {
 
 resource "aws_vpc" "Dep9_vpc" {
   cidr_block = "172.28.0.0/16"
-}
+
   tags = {
-    "Name" = "Dep9_vpc"
+    "Name" = "Dep9_vpc_"
   }
 }
 
@@ -18,7 +18,7 @@ resource "aws_subnet" "publicA" {
   availability_zone = "us-east-1a"
   
   tags = {
-    "Name" = "public | us-east-1a"
+    "Name" = ""
   }
 }
 
@@ -28,7 +28,7 @@ resource "aws_subnet" "privateA" {
   availability_zone = "us-east-1a"
 
   tags = {
-    "Name" = "private | us-east-1a"
+    "Name" = "private-us-east-1a"
   }
 }
 
@@ -38,7 +38,7 @@ resource "aws_subnet" "publicB" {
   availability_zone = "us-east-1b"
 
   tags = {
-    "Name" = "public | us-east-1b"
+    "Name" = "public-us-east-1b"
   }
 }
 
@@ -48,7 +48,7 @@ resource "aws_subnet" "privateB" {
   availability_zone = "us-east-1b"
 
   tags = {
-    "Name" = "private | us-east-1b"
+    "Name" = "private-us-east-1b"
   }
 }
 
