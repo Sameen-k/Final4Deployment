@@ -1,7 +1,6 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-    namespace: D9-namespace
     name: e-commerce-ingress
     annotations:
         alb.ingress.kubernetes.io/scheme: internet-facing
