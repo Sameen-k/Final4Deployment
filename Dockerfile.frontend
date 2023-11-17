@@ -5,10 +5,10 @@ FROM node:10
 WORKDIR /frontend
 
 #copy cur dir to container
-COPY . /frontend
+COPY /frontend /frontend
 
 # Install Node.js dependencies
-RUN npm install 
+RUN npm install
 RUN npm install --save-dev @babel/plugin-proposal-private-property-in-object
 
 # Expose port 3000 for the Node.js application
