@@ -5,7 +5,7 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('morenodoesinfra-dockerhub')
-        AWS_EKS_CLUSTER_NAME = 'D9Cluster'
+        AWS_EKS_CLUSTER_NAME = 'Dep9Cluster'
         AWS_EKS_REGION = 'us-east-1'
         KUBE_MANIFESTS_DIR = '/home/ubuntu/c4_deployment-9/KUBE_MANIFEST'
         SLACK_WEBHOOK_CREDENTIALS = credentials('SLACK_WEBHOOK_CREDENTIALS')
