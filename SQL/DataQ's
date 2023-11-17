@@ -1,0 +1,486 @@
+Create a diagram of the schema and relationship between the tables (keys). (Use draw.io for this question)
+
+What is the distribution of the amount of products ORDERED? How much revenue would each product have generated IF the order was completed?
+
+Product Distribution and Revenue:
+                                         product_name  product_count  total_revenue
+0   1.32-Lb Optimum Nutrition Micronized Creatine ...            472     1296966.32
+1   120-Piece DeWALT Maxfit Ultra Steel Drill/Driv...            462     1154080.62
+2   2-Count 5-52.5 lbs. FitRx Smart Bell Quick Sel...            415    13822322.00
+3   2-Pack Govee 15 inch Wi-Fi RGBIC Smart TV Ligh...            439     2558794.91
+4   2TB Samsung 980 PRO M.2 PCIe Gen 4 x4 NVMe Int...            489     5211850.02
+5   32 inch Outdoor Fire Pit & BBQ Pit w/ Accessories            460     7658802.20
+6   40-Piece LEGO Super Heroes Batman 1992 Buildin...            471      392187.57
+7           64GB Nintendo Switch OLED Console (White)            448    13056265.60
+8                    700c Giordano Duetto Tandem Bike            445    31495742.75
+9   8 inch MIYABI Mizu SG2 Micro-Carbide Powder St...            470     8570670.90
+10  Apple AirPods Bluetooth Earbuds w/ Lightning C...            434     4336545.36
+11                                         Apple Ipad            445    17354995.55
+12  Arcade1up Marvel vs Capcom Head-to-Head Arcade...            486    28327433.40
+13                                    Bolt Headphones            449      539244.51
+14                                     Colour Pencils            457       45700.00
+15                                    Computer Chairs            448     2687995.52
+16              Dyson V8 Cordless Stick Origin Vacuum            411    14715776.91
+17  Galanz 3.3 cu. ft. Retro Compact Refrigerator ...            460     8771344.40
+18                                       Gaming Mouse            431      344795.69
+19  Govee Bluetooth RGB LED Light Strips: 66.5' $1...            367      763976.56
+20  Huanuo Dual Monitor Adjustable Spring Stand Mo...            459     2293173.18
+21            JBL Bar 2.0 All-in-One Compact Soundbar            452     7527336.80
+22                    Lasko Ceramic Mini Tower Heater            473      827092.53
+23  Lisen 15W Wireless MagSafe Phone Car Vent Moun...            457     1522120.76
+24  Logitech G305 Lightspeed Wireless Gaming Mouse...            502     2090001.70
+25                                        MacBook Pro            448    55999995.52
+26                                      Playstation 5            469    14070000.00
+27  Thule Arcos Exterior Platform Hard Shell Cargo...            470    50876137.00
+28  Timex Men's Expedition Scout 40mm Fabric Strap...            485      928842.90
+29                    Winix C909 4-Stage Air Purifier            482     8026938.80
+30                                  Wireless Keyboard            416     1088792.64
+31  Yankee Candle Red Apple Wreath Scented, Classi...            455      568299.55
+32          eufy Clean RoboVac L50 SES Vacuum Cleaner            477    19859179.50
+
+
+Which states ordered the most products? Least products? How does the revenue generated compare to the amount of products sold? What were the top 5 products sold in each of those states? (Answer should include all states)
+
+State-wise Analysis:
+             state  product_count  total_revenue  \
+0           Alaska            390     7901737.70   
+1             Ohio            386     9146064.87   
+2          Montana            381     9651759.41   
+3          Alabama            375     8034475.35   
+4            Texas            366     8195276.09   
+5     Pennsylvania            347     7898357.20   
+6        Tennessee            341     8130542.46   
+7      Connecticut            339     7258890.60   
+8    Massachusetts            338     7187954.32   
+9          Arizona            331     7446129.45   
+10        New York            328     8188933.27   
+11        Delaware            326     8129632.92   
+12      New Mexico            324     7305345.21   
+13        Illinois            324     6179994.89   
+14    South Dakota            322     7117031.88   
+15       Minnesota            321     7303736.36   
+16           Idaho            321     6404562.58   
+17          Oregon            320     6782030.24   
+18   West Virginia            317     6080311.57   
+19      California            308     6288262.31   
+20         Georgia            305     5685053.03   
+21        Oklahoma            304     6427736.98   
+22       Louisiana            303     6788170.94   
+23     Mississippi            302     5914963.84   
+24         Wyoming            301     7002128.30   
+25        Arkansas            299     6542891.88   
+26    North Dakota            297     5741933.33   
+27  North Carolina            297     7126626.44   
+28      New Jersey            287     6478668.47   
+29        Michigan            287     6131065.45   
+30          Kansas            287     6745392.55   
+31        Kentucky            285     5960478.39   
+32      Washington            284     5756212.03   
+33         Indiana            284     5983724.71   
+34  South Carolina            281     5694225.28   
+35   New Hampshire            276     6205406.03   
+36            Utah            272     6176358.12   
+37        Maryland            270     6031201.98   
+38       Wisconsin            269     6163434.38   
+39    Rhode Island            262     5700149.93   
+40         Vermont            259     4754009.37   
+41          Hawaii            258     6244748.41   
+42        Missouri            252     5795855.09   
+43        Virginia            249     4971661.13   
+44            Iowa            249     5155729.82   
+45        Colorado            246     5963208.02   
+46        Nebraska            231     4740876.88   
+47         Florida            229     5039074.27   
+48          Nevada            226     5286739.42   
+49           Maine            224     5204105.04   
+50        new york             16      492123.86   
+51           Delhi             16      492123.86   
+52         unknown              7      209419.63   
+53              ny              1       38999.99   
+
+
+Top 5 Products Sold in Each State:
+Alaska
+8 inch MIYABI Mizu SG2 Micro-Carbide Powder Steel Chef’s Knife
+Wireless Keyboard
+Computer Chairs
+Apple AirPods Bluetooth Earbuds w/ Lightning Connector
+Apple Ipad
+
+
+Ohio
+Wireless Keyboard
+Computer Chairs
+Apple AirPods Bluetooth Earbuds w/ Lightning Connector
+Apple Ipad
+MacBook Pro
+
+Montana
+Playstation 5
+Computer Chairs
+Computer Chair Mat with Lip for Hardwood Floors
+Apple AirPods Bluetooth Earbuds w/ Lightning Connector
+MacBook Pro
+
+Alabama
+2-Count 5-52.5 lbs. FitRx Smart Bell Quick Select Dumbbell
+Wireless Keyboard
+Computer Chairs
+MacBook Pro
+Thule Arcos Exterior Platform Hard Shell Cargo Box
+
+Texas
+MacBook Pro
+Yankee Candle Red Apple Wreath Scented, Classic 22 oz
+Wireless Keyboard
+Computer Chairs
+Arcade1up Marvel vs Capcom Head-to-Head Arcade Table
+
+Pennsylvania
+Galanz 3.3 cu. ft. Retro Compact Refrigerator with Dual Doors
+Arcade1up Marvel vs Capcom Head-to-Head Arcade Table
+Apple Ipad
+Computer Chairs
+Wireless Keyboard
+
+Tennessee
+Arcade1up Marvel vs Capcom Head-to-Head Arcade Table
+Computer Chairs
+Huanuo Dual Monitor Adjustable Spring Stand Mount Desk Mount
+Apple AirPods Bluetooth Earbuds w/ Lightning Connector
+Apple Ipad
+
+Connecticut
+2-Count 5-52.5 lbs. FitRx Smart Bell Quick Select Dumbbell
+Computer Chairs
+Computer Chair Mat with Lip for Hardwood Floors
+MacBook Pro
+Apple Ipad
+
+Massachusetts
+64GB Nintendo Switch OLED Console (White)
+2TB Samsung 980 PRO M.2 PCIe Gen 4 x4 NVMe Internal Gaming SSD
+Computer Chairs
+Apple Ipad
+Apple AirPods Bluetooth Earbuds w/ Lightning Connector
+
+Arizona
+Bolt Headphones
+Huanuo Dual Monitor Adjustable Spring Stand Mount Desk Mount
+Apple AirPods Bluetooth Earbuds w/ Lightning Connector
+Apple Ipad
+Wireless Keyboard
+
+New York
+Gaming Mouse
+Timex Men's Expedition Scout 40mm Fabric Strap Watch
+Logitech G305 Lightspeed Wireless Gaming Mouse
+MacBook Pro
+Winix C909 4-Stage Air Purifier
+
+Delaware
+Apple Ipad
+Timex Men's Expedition Scout 40mm Fabric Strap Watch
+Apple Ipad
+Huanuo Dual Monitor Adjustable Spring Stand Mount Desk Mount
+MacBook Pro
+
+New Mexico
+Colour Pencils
+Wireless Keyboard
+2-Count 5-52.5 lbs. FitRx Smart Bell Quick Select Dumbbell
+Computer Chairs
+Logitech G305 Lightspeed Wireless Gaming Mouse
+
+Illinois
+1.32-Lb Optimum Nutrition Micronized Creatine Monohydrate Powder
+32 inch Outdoor Fire Pit & BBQ Pit w/ Accessories
+Apple Ipad
+MacBook Pro
+Lasko Ceramic Mini Tower Heater
+
+South Dakota
+Winix C909 4-Stage Air Purifier
+Gaming Mouse
+Lasko Ceramic Mini Tower Heater
+40-Piece LEGO Super Heroes Batman 1992 Building Kit
+Wireless Keyboard
+
+Minnesota
+Galanz 3.3 cu. ft. Retro Compact Refrigerator with Dual Doors
+Arcade1up Marvel vs Capcom Head-to-Head Arcade Table
+Huanuo Dual Monitor Adjustable Spring Stand Mount Desk Mount
+Apple Ipad
+MacBook Pro
+
+Idaho
+eufy Clean RoboVac L50 SES Vacuum Cleaner
+Logitech G305 Lightspeed Wireless Gaming Mouse
+Computer Chairs
+2TB Samsung 980 PRO M.2 PCIe Gen 4 x4 NVMe Internal Gaming SSD
+Apple AirPods Bluetooth Earbuds w/ Lightning Connector
+
+Oregon
+Colour Pencils
+32 inch Outdoor Fire Pit & BBQ Pit w/ Accessories
+Winix C909 4-Stage Air Purifier
+40-Piece LEGO Super Heroes Batman 1992 Building Kit
+2TB Samsung 980 PRO M.2 PCIe Gen 4 x4 NVMe Internal Gaming SSD
+
+West Virginia
+Lisen 15W Wireless MagSafe Phone Car Vent Mount
+Thule Arcos Exterior Platform Hard Shell Cargo Box
+Lasko Ceramic Mini Tower Heater
+40-Piece LEGO Super Heroes Batman 1992 Building Kit
+Wireless Keyboard
+
+California
+Galanz 3.3 cu. ft. Retro Compact Refrigerator with Dual Doors
+Arcade1up Marvel vs Capcom Head-to-Head Arcade Table
+Huanuo Dual Monitor Adjustable Spring Stand Mount Desk Mount
+64GB Nintendo Switch OLED Console (White)
+2TB Samsung 980 PRO M.2 PCIe Gen 4 x4 NVMe Internal Gaming SSD
+
+Georgia
+Galanz 3.3 cu. ft. Retro Compact Refrigerator with Dual Doors
+Arcade1up Marvel vs Capcom Head-to-Head Arcade Table
+Computer Chairs
+Huanuo Dual Monitor Adjustable Spring Stand Mount Desk Mount
+Wireless Keyboard
+
+Oklahoma
+Wireless Keyboard
+Computer Chairs
+Arcade1up Marvel vs Capcom Head-to-Head Arcade Table
+Apple AirPods Bluetooth Earbuds w/ Lightning Connector
+Apple Ipad
+
+Louisiana
+MacBook Pro
+1.32-Lb Optimum Nutrition Micronized Creatine Monohydrate Powder
+32 inch Outdoor Fire Pit & BBQ Pit w/ Accessories
+Winix C909 4-Stage Air Purifier
+Gaming Mouse
+
+Mississippi
+Bolt Headphones
+8 inch MIYABI Mizu SG2 Micro-Carbide Powder Steel Chef’s Knife
+MacBook Pro
+Logitech G305 Lightspeed Wireless Gaming Mouse
+Computer Chairs
+
+Wyoming
+2TB Samsung 980 PRO M.2 PCIe Gen 4 x4 NVMe Internal Gaming SSD
+MacBook Pro
+Thule Arcos Exterior Platform Hard Shell Cargo Box
+Winix C909 4-Stage Air Purifier
+Gaming Mouse
+
+Arkansas
+40-Piece LEGO Super Heroes Batman 1992 Building Kit
+Wireless Keyboard
+Computer Chairs
+Logitech G305 Lightspeed Wireless Gaming Mouse
+1.32-Lb Optimum Nutrition Micronized Creatine Monohydrate Powder
+
+North Dakota
+8 inch MIYABI Mizu SG2 Micro-Carbide Powder Steel Chef’s Knife
+MacBook Pro
+Yankee Candle Red Apple Wreath Scented, Classic 22 oz
+1.32-Lb Optimum Nutrition Micronized Creatine Monohydrate Powder
+Apple AirPods Bluetooth Earbuds w/ Lightning Connector
+
+North Carolina
+MacBook Pro
+MacBook Pro
+Apple Ipad
+Wireless Keyboard
+Computer Chairs
+
+New Jersey
+Lisen 15W Wireless MagSafe Phone Car Vent Mount
+40-Piece LEGO Super Heroes Batman 1992 Building Kit
+Wireless Keyboard
+Computer Chairs
+Apple Ipad
+
+Michigan
+2-Count 5-52.5 lbs. FitRx Smart Bell Quick Select Dumbbell
+Winix C909 4-Stage Air Purifier
+Gaming Mouse
+Lasko Ceramic Mini Tower Heater
+Wireless Keyboard
+
+Kansas
+Thule Arcos Exterior Platform Hard Shell Cargo Box
+Wireless Keyboard
+Computer Chairs
+Apple Ipad
+MacBook Pro
+
+Kentucky
+Gaming Mouse
+Wireless Keyboard
+Gaming Mouse
+Apple Ipad
+2TB Samsung 980 PRO M.2 PCIe Gen 4 x4 NVMe Internal Gaming SSD
+
+Washington
+8 inch MIYABI Mizu SG2 Micro-Carbide Powder Steel Chef’s Knife
+MacBook Pro
+Logitech G305 Lightspeed Wireless Gaming Mouse
+1.32-Lb Optimum Nutrition Micronized Creatine Monohydrate Powder
+Huanuo Dual Monitor Adjustable Spring Stand Mount Desk Mount
+
+Indiana
+Huanuo Dual Monitor Adjustable Spring Stand Mount Desk Mount
+Wireless Keyboard
+Apple Ipad
+Computer Chairs
+MacBook Pro
+
+South Carolina
+Lisen 15W Wireless MagSafe Phone Car Vent Mount
+Thule Arcos Exterior Platform Hard Shell Cargo Box
+MacBook Pro
+40-Piece LEGO Super Heroes Batman 1992 Building Kit
+Wireless Keyboard
+
+New Hampshire
+2-Pack Govee 15 inch Wi-Fi RGBIC Smart TV Light Strip
+40-Piece LEGO Super Heroes Batman 1992 Building Kit
+2TB Samsung 980 PRO M.2 PCIe Gen 4 x4 NVMe Internal Gaming SSD
+Lasko Ceramic Mini Tower Heater
+MacBook Pro
+
+Utah
+40-Piece LEGO Super Heroes Batman 1992 Building Kit
+Wireless Keyboard
+Lisen 15W Wireless MagSafe Phone Car Vent Mount
+8 inch MIYABI Mizu SG2 Micro-Carbide Powder Steel Chef’s Knife
+Logitech G305 Lightspeed Wireless Gaming Mouse
+
+Maryland
+Lasko Ceramic Mini Tower Heater
+40-Piece LEGO Super Heroes Batman 1992 Building Kit
+Wireless Keyboard
+Computer Chairs
+Apple Ipad
+
+Wisconsin
+MacBook Pro
+Logitech G305 Lightspeed Wireless Gaming Mouse
+Apple Ipad
+Wireless Keyboard
+Thule Arcos Exterior Platform Hard Shell Cargo Box
+
+Rhode Island
+2-Pack Govee 15 inch Wi-Fi RGBIC Smart TV Light Bars
+Apple AirPods Bluetooth Earbuds w/ Lightning Connector
+Logitech G305 Lightspeed Wireless Gaming Mouse
+Wireless Keyboard
+Computer Chairs
+
+Vermont
+2TB Samsung 980 PRO M.2 PCIe Gen 4 x4 NVMe Internal Gaming SSD
+Logitech G305 Lightspeed Wireless Gaming Mouse
+MacBook Pro
+Apple AirPods Bluetooth Earbuds w/ Lightning Connector
+1.32-Lb Optimum Nutrition Micronized Creatine Monohydrate Powder
+
+Hawaii
+Wireless Keyboard
+Lisen 15W Wireless MagSafe Phone Car Vent Mount Charger
+Wireless Keyboard
+Apple AirPods Bluetooth Earbuds w/ Lightning Connector
+Logitech G305 Lightspeed Wireless Gaming Mouse
+
+Missouri
+Computer Chairs
+Thule Arcos Exterior Platform Hard Shell Cargo Box
+8 inch MIYABI Mizu SG2 Micro-Carbide Powder Steel Chef’s Knife
+Logitech G305 Lightspeed Wireless Gaming Mouse
+Apple AirPods Bluetooth Earbuds w/ Lightning Connector
+
+Virginia
+2TB Samsung 980 PRO M.2 PCIe Gen 4 x4 NVMe Internal Gaming SSD
+Logitech G305 Lightspeed Wireless Gaming Mouse
+MacBook Pro
+Computer Chairs
+Apple Ipad
+
+Iowa
+Lisen 15W Wireless MagSafe Phone Car Vent Mount Charger
+Wireless Keyboard
+MacBook Pro
+Apple Ipad
+2-Pack Govee 15 inch Wi-Fi RGBIC Smart TV Light Bars
+
+Colorado
+Playstation 5
+1.32-Lb Optimum Nutrition Micronized Creatine Monohydrate Powder
+Wireless Keyboard
+Logitech G305 Lightspeed Wireless Gaming Mouse
+MacBook Pro
+
+Nebraska
+Arcade1up Marvel vs Capcom Head-to-Head Arcade Table
+Computer Chairs
+Thule Arcos Exterior Platform Hard Shell Cargo Box
+MacBook Pro
+Huanuo Dual Monitor Adjustable Spring Stand Mount Desk Mount
+
+Florida
+MacBook Pro
+32 inch Outdoor Fire Pit & BBQ Pit w/ Accessories
+Logitech G305 Lightspeed Wireless Gaming Mouse
+Apple Ipad
+40-Piece LEGO Super Heroes Batman 1992 Building Kit
+
+Nevada
+40-Piece LEGO Super Heroes Batman 1992 Building Kit
+Apple AirPods Bluetooth Earbuds w/ Lightning Connector
+Logitech G305 Lightspeed Wireless Gaming Mouse
+64GB Nintendo Switch OLED Console (White)
+Wireless Keyboard
+
+Maine
+Arcade1up Marvel vs Capcom Head-to-Head Arcade Table
+2-Count 5-52.5 lbs. FitRx Smart Bell Quick Select Dumbbell
+Apple Ipad
+MacBook Pro
+Wireless Keyboard
+
+new york
+Bolt Headphones
+64GB Nintendo Switch OLED Console (White)
+Colour Pencils
+32 inch Outdoor Fire Pit & BBQ Pit w/ Accessories
+
+
+There are orders that were placed that weren't paid for. Those shouldn't have been shipped out. How much money did this company lose by delivering products that were not paid for? How does this compare to how much revenue would have been generated?
+
+The company lost revenue from unpaid orders, and the lost revenue due to these unpaid orders is calculated based on the total price of the products in those orders. Here's the calculation:
+
+Unpaid Orders Analysis:
+Unpaid Orders: 7550
+Lost Revenue: ₹164,447,300.00 (Indian Rupees)
+Lost Revenue in USD:
+To convert the lost revenue from Indian Rupees to USD, we'll use the provided exchange rate of 1 Rupee to 0.012 USD.
+
+Lost Revenue in USD: $1,973,367.60
+Comparison with Actual Revenue:
+To compare the lost revenue from unpaid orders with the actual revenue generated, we can use the actual revenue value:
+
+Actual Revenue:
+Actual Revenue: ₹164,342,100.00 (Indian Rupees)
+Actual Revenue in USD: $1,972,105.20
+Comparison:
+Lost Revenue: $1,973,367.60
+Actual Revenue: $1,972,105.20
+
+Taking into consideration that some orders were not completed, how much money was ACTUALLY generated compared to the answer from Question 1?
+
+Actual Revenue in USD: 1,972,105.20
+Potential Revenue from Unpaid Orders in USD: 1,973,367.60
+Difference: -105,200.00 USD
