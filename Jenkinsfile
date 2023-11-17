@@ -23,9 +23,9 @@ pipeline {
 
         stage('Build Frontend') {
             steps {
-                sh 'docker build -t morenodoesinfra/d8-frontend:v3 -f Dockerfile.frontend .'
+                sh 'docker build -t morenodoesinfra/d8-frontend:v4git -f Dockerfile.frontend .'
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker push morenodoesinfra/d8-frontend:v3'
+                sh 'docker push morenodoesinfra/d8-frontend:v4'
                 }
             }
         
