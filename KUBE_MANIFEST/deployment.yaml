@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
         - name: d9-frontend
-          image: morenodoesinfra/d8-frontend:v3
+          image: morenodoesinfra/d8-frontend:v4
           ports:
             - name: http
               containerPort: 3000             
