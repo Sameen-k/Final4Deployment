@@ -19,7 +19,7 @@ spec:
             - name: http
               containerPort: 8000
 ---
-Version: apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: d9-frontend
