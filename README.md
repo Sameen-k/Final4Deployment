@@ -1,6 +1,6 @@
-## <ins>KURA HITTERS</ins>
+# <ins>KURA HITTERS</ins>
 
-## November 18, 2023
+#### November 18, 2023
 
 ### *Project Manager:* Ethan Arteta
 ### *Chief Architect:* Danielle Davis
