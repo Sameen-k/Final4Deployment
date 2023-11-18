@@ -245,7 +245,7 @@ ________________________________________________________________________________
 
 * Created certificate manager to secure the traffic from clients and associated ingress (incoming traffic) controller with the associated domain name that will be created to access our application through the load balancer.
 
-* List of polocies under my AWSLoadBalancerControllerRole:
+* List of polocies under the AWSLoadBalancerControllerRole on our worker nodes (2 instances configured to spin back up if ever terminated:
 ![policies](Deployment9Img/iamroles.png)
 
  ______________________________________________________________________________________________________
@@ -258,7 +258,7 @@ ________________________________________________________________________________
 
 •	Lasty, I ran: ```kubectl apply -k "github.com/aws/eks-charts/stable/aws-load-balancer-controller/crds"``` to apply Kubernetes resources that we download from an ingressclass.yaml file with pre-configured resource definitions so that AWS can manage the resources necessary to run the ALB efficiently.
 
-![alb](Deployment9Img/load balancer.png)
+![cw](Deployment9Img/load balancer.png)</ins>
 ______________________________________________________________________________________________________
 **<ins>Installed cloudwatch agent:</ins>** 
 
@@ -273,7 +273,7 @@ ________________________________________________________________________________
 ```aws eks create-addon --cluster-name * pre-existing cluster-name* --addon-name amazon-cloudwatch-observability```
 
 Cloudwatch log groups:
-![cw](Deployment9Img/cloudwatchlogs.png)
+![cw](Deployment9Img/load_balancer.png)
 
 _______________________________________________________________________
 
@@ -360,9 +360,12 @@ ________________________________________________________________________________
 
 ![kubectl objects](Deployment9Img/Kubeimg.png)
 
-- Successful Slack notification & Deployment of our E-commerce application:
+- Slack notification of successful Jenkins pipeline:
+  
+![slack](Deployment9Img/slack.png)
 
-![deploy](Deployment9Img/FrontEndImg.png)
+![jenkins](Deployment9Img/jenkins.png)
+
 
 ____________________________________________________________________________________________________________________________________________
 
@@ -392,6 +395,10 @@ ________________________________________________________________________________
 ______________________________________________________________________________________________________
 ## 5. **<ins>Conclusion & Optimization</ins>**
 ________________________________________________________
+
+<ins>Successful Deployment of our E-commerce application:</ins>
+
+![deploy](Deployment9Img/FrontEndImg.png)
 
 &emsp;&emsp;&emsp;&emsp; The production environment for our deployment was created within Amazon’s Elastic Kubernetes Service, using Kubernetes, an open-source container orchestration tool. One of the benefits of using Kubernetes over a tool like Elastic Container Service is that K8s infrastructure can more easily be moved to another cloud provider that supports Kubernetes, which is also easily integratable with third party tools that aren’t provided by AWS. EKS also manages many processes and configurations to regulate the state of our cluster environment from its control plane such as an auto scaling group, DNS server, and API server.
 
