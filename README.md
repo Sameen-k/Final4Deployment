@@ -169,9 +169,8 @@ ____________________________________________________________
 
 ___________________________________________________________________________
 
-
 2.	**<ins>Chief architect managed system design and infrastructure:</ins>** 
-
+____________________________________________________________________________
 	![sd](Deployment9Img/DEPLOYMENT9.png)
 
 * <ins>Configured *staging environment* with **[Jenkins infrastructure](main.tf)** and CI/CD pipeline stages with **[Jenkinsfile](Jenkinsfile):**</ins>
@@ -208,13 +207,13 @@ ___________________________________________________________________________
 
 **<ins>Stage: Slack notification:</ins>**
 
-		*<ins>Found documentation on the Slack API and utilizing a webhook URL to broadcast messages to the team on our designated Slack channel:</ins>*
+*<ins>Found documentation on the Slack API and utilizing a webhook URL to broadcast messages to the team on our designated Slack channel:</ins>*
 
 •	For Slack access on Jenkins: Configured credentials as a “secret text” like how we enter our AWS keys. Defined and set variables for slack webhook URL within Jenkinsfile to avoid directly hard coding and leaking our URL onto GitHub again. 
 
-**<ins>Application network infrastructure created in a new VPC:</ins>**
 
-**[appinfra.tf](intTerraform/appinfra.tf):**
+**<ins>Application network infrastructure created in a new VPC in [appinfra.tf](intTerraform/appinfra.tf):**
+____________________________________________________________________________________________________________-
 
 •	1 VPC *(avoids any network conflicts, flexible network design, & isolates EKS cluster from other resources in AWS account)*
 
@@ -230,30 +229,34 @@ ___________________________________________________________________________
 
 •	2 route tables *(private route table to connect to the NAT gateway, public route table to connect the public subnets to the application load balancer)*
 
+
 **<ins>Necessary pre-configurations to be done on EKS cluster to provision the ALB controller:</ins>**
+______________________________________________________________________________________________________
 
-	- Provided permission to my AWS account to interact with our cluster through *OpenID*
+* Provided permission to my AWS account to interact with our cluster through *OpenID*
 
-	- Added new tags: the key being: “kubernetes.io/role/elb” and the value: “1” so that  Kubernetes could identify the suitability of our public subnets to host our application load balancer. 
+* Added new tags: the key being: “kubernetes.io/role/elb” and the value: “1” so that  Kubernetes could identify the suitability of our public subnets to host our application load balancer. 
 
-	- Downloaded iampolicy.json file in our EKS cluster to define what is allowable and what isn’t when accessing our application. 
+* Downloaded iampolicy.json file in our EKS cluster to define what is allowable and what isn’t when accessing our application. 
 
-	- Downloaded “AWSLoadBalancerControllerIAMPolicy to give permission to my cluster to use my ALB controller.
+* Downloaded “AWSLoadBalancerControllerIAMPolicy to give permission to my cluster to use my ALB controller.
 
-	- Create a service account that is used to control access to our ingress controller to interact with our ALB in our EKS cluster.
+* Create a service account that is used to control access to our ingress controller to interact with our ALB in our EKS cluster.
 
-	- Created certificate manager to secure the traffic from clients and associated ingress (incoming traffic) controller with the associated domain name that will be created to access our application through the load balancer.
-	
+* Created certificate manager to secure the traffic from clients and associated ingress (incoming traffic) controller with the associated domain name that will be created to access our application through the load balancer.
+
+ 
 **<ins> Configured ALB controller:</ins>**
-
+_____________________________________________
 •	Downloaded v2_4_5_full.yaml file from GitHub: *wget https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases/download/v2.4.5/v2_4_5_full.yaml* which acts as our *IngressClass.yaml* file to define the ingress controller we’re creating to handle the ALB controller resource to balance traffic load. *changed cluster name to our EKS cluster*
 
 •	Configure the Kubernetes ingressclass.yaml file to our cluster by running: *kubectl apply -f v2_4_5_full.yaml*. 
 
 •	Lasty, I ran: *kubectl apply -k "github.com/aws/eks-charts/stable/aws-load-balancer-controller/crds"* to apply Kubernetes resources that we download from an ingressclass.yaml file with pre-configured resource definitions so that AWS can manage the resources necessary to run the ALB efficiently.
 
-**<ins>Installed cloudwatch agent:</ins>** 
 
+**<ins>Installed cloudwatch agent:</ins>** 
+_________________________________________________
 *<ins>Found documentation for easy installation on AWS:</ins>*
 
 •	The following command attaches a role policy to my cluster by updating the policies under my IAM role to include the *CloudWatchAgentServerPolicy*:
@@ -267,65 +270,52 @@ _______________________________________________________________________
 
 
 3.	**<ins>System administrator configured Docker and Kubernetes files:</ins>**
-
-*</ins>The [Dockerfile.frontend](Dockerfile.frontend)</ins> contains the frontend image:*
-
-
+____________________________________________________________________________________
+**</ins>The [Dockerfile.frontend](Dockerfile.frontend)</ins> contains the frontend image:**
+____________________________________________________________________________________
 •	The image contains a React application and its node dependencies.
-
 
 •	The base image is node:10 which is the version the application needs
 
-
 •	The image copies the application from the ```frontend``` directory in this repository
-
 
 •	npm dependencies are installed
 
-
 •	The application is exposed on port 3000 
-
 
 •	The cmd to start the application is 
 ```CMD ["npm", "start"]```
 
-*<ins>The [Dockerfile.backend](Dockerfile.backend)</ins> contains the backend image:*
 
-
+**<ins>The [Dockerfile.backend](Dockerfile.backend)</ins> contains the backend image:**
+_______________________________________________________________________________________
 •	The image contains a Django REST API and its pip dependencies. The backend container is consumed by the frontend containers
-
 
 •	The base image is python:3.9, the python version the application expects
 
-
 •	The backend application is downloaded from a GitHub repository
-
 
 •	The ```WORKDIR``` is set to ```/app/c4_deployment-8/backend``` to be in the directory where the backend application lived
 
-
 •	pip dependencies are installed
 
-
 •	Data is migrated into the database
-
 
 •	The cmd to start the application is 
 ```CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]```
 
-*<ins>Created AWS user accounts (user IAM roles) for team members:</ins>* 
 
-
+**<ins>Created AWS user accounts (user IAM roles) for team members:</ins>** 
+____________________________________________________________________________
 •	Create users for each team member
-
 
 •	The authorization for each user is copied from the System Admin
 
-
 •	Authentication is set by the System Admin and configured to prompt new users for a password on first login
 
-*<ins>Provided AWS & Docker credentials for Jenkins:</ins>*
 
+**<ins>Provided AWS & Docker credentials for Jenkins:</ins>**
+______________________________________________________________
 **For AWS:**
 
 •	The ```Deploy to EKS``` stage in the Jenkins pipeline needs AWS credentials to execute the ```kubectl apply``` that creates the Kubernetes objects in our EKS cluster. The AWS access key and secret keys are stored as secret text in the Jenkins credentials utility. The credentials are then called by the Jenkinsfile and passed to the ```kubectl``` command in the Jenkinsfile.
@@ -337,6 +327,7 @@ _______________________________________________________________________
 •	Provisioned the agent nodes: The nodes for our cluster are provisioned in the private subnets as a measure of security. Neither the frontend or backend pods are directly accessible. The frontend ingress receives traffic only through the load balancer. The frontend containers access the backend through the backend service. 
 			
 **<ins>Kubernetes manifest:</ins>**
+__________________________________________
 
 The Kubernetes objects that are included in the Cluster are an ingress, 2 services, and 2 deployments for each node:
 
@@ -356,9 +347,11 @@ The Kubernetes objects that are included in the Cluster are an ingress, 2 servic
 
 ![kubectl objects](Deployment9Img/Kubeimg.png)
 
+
 _______________________________________________________________
 
 ## 4.	<ins>Data Engineer sifted through the database and provided visualizations that aided in:</ins>**
+_______________________________________________________________________________________________________
 
 •	Identifying Trends: Discovering recurring patterns or trends in data over time, which can be useful for predicting future behavior.
 
@@ -381,8 +374,8 @@ _______________________________________________________________
 •	Optimization Opportunities: Identifying areas where improvements can be made to enhance efficiency, reduce costs, or increase effectiveness.
 
 
-
 ## 5. **<ins>Conclusion & Optimization</ins>**
+________________________________________________________
 
 &emsp;&emsp;&emsp;&emsp; The production environment for our deployment was created within Amazon’s Elastic Kubernetes Service, using Kubernetes, an open-source container orchestration tool. One of the benefits of using Kubernetes over a tool like Elastic Container Service is that K8s infrastructure can more easily be moved to another cloud provider that supports Kubernetes, which is also easily integratable with third party tools that aren’t provided by AWS. EKS also manages many processes and configurations to regulate the state of our cluster environment from its control plane such as an auto scaling group, DNS server, and API server.
 
@@ -391,6 +384,7 @@ _______________________________________________________________
 &emsp;&emsp;&emsp;&emsp;  EKS further enhances security over our application infrastructure with our bastion host/EKS agent server by connecting the kubelet in our nodes to the Kubernetes API, making it an optimal platform choice in load balancing, scaling, and managing accessibility of our microservices in our application. Additionally, as a cost saving measure, the nodes are on t2.medium EC2 instances rather than the default m5.large nodes that the ```eksctl create cluster``` command provides. 
 
 **<ins>Different ways to improve optimization:</ins>**
+________________________________________________________
 
 **Fault tolerance:**
 
