@@ -138,7 +138,7 @@ _______________________________________________________
     2. **Correct Data Type:** Ensured the data type is suitable for conversion, changing it to a numeric type.
 
 __________________________________________________________
-##<ins> Project Organization:</ins>
+## <ins> Project Organization:</ins>
 ____________________________________________________________
 
 ### <ins>Steps:</ins>
