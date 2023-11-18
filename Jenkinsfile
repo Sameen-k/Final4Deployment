@@ -8,8 +8,7 @@ pipeline {
         AWS_EKS_CLUSTER_NAME = 'Dep9Cluster'
         AWS_EKS_REGION = 'us-east-1'
         KUBE_MANIFESTS_DIR = '/home/ubuntu//agent2/workspace/e-commerce-pipeline_main/KUBE_MANIFEST'
-            }          
-
+    }          
 
     stages {
         stage('Build Backend') {
