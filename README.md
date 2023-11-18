@@ -1,11 +1,11 @@
 ## <ins>KURA HITTERS</ins>
 
-### November 18, 2023
+## November 18, 2023
 
-#### *Project Manager:* Ethan Arteta
-#### *Chief Architect:* Danielle Davis
-#### *System Administrator:* Luis Moreno
-#### *Data Engineer:* Khalil Elkharbibi
+### *Project Manager:* Ethan Arteta
+### *Chief Architect:* Danielle Davis
+### *System Administrator:* Luis Moreno
+### *Data Engineer:* Khalil Elkharbibi
 
 _______________________________________________________
 ## <ins>Purpose:</ins>
