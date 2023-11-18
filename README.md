@@ -13,19 +13,8 @@ ____________________________________________________
 
 &emsp;&emsp;&emsp;&emsp;	To deploy a robust and scalable E-commerce application in a cluster environment through AWS EKS(Elastic Kubernetes Service), utilizing Docker, Terraform, and Jenkins to automate the building of our infrastructure. This documentation outlines the responsibilities of each team member, the deployment process, and the subsequent data analysis for insightful decision-making.
 
-<ins>**Application Stack:**</ins>
-
-*Infrastructure:* AWS EKS, Terraform
-
-*Containerization:* Docker
-
-*CI/CD:* Jenkins
-
-*FrontEnd:* Django
-
-*BackEnd:* React
-
-*DataBase:* SQLite
+<ins>**Application Stack:**</ins>: *Infrastructure:* AWS EKS & Terraform, *Containerization:* Docker, *CI/CD:* Jenkins, *FrontEnd:* Django, 
+*BackEnd:* React, *DataBase:* SQLite
 
 _________________________________________________________
 ## <ins>DevOps Issues</ins>
