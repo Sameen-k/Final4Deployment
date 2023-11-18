@@ -170,10 +170,10 @@ ____________________________________________________________
 ___________________________________________________________________________
 
 2.	**<ins>Chief architect managed system design and infrastructure:</ins>** 
-____________________________________________________________________________
+
 	![sd](Deployment9Img/DEPLOYMENT9.png)
 
-* <ins>Configured *staging environment* with **[Jenkins infrastructure](main.tf)** and CI/CD pipeline stages with **[Jenkinsfile](Jenkinsfile):**</ins>
+**<ins>Configured *staging environment* with [Jenkins infrastructure](main.tf) and CI/CD pipeline stages with [Jenkinsfile](Jenkinsfile):</ins>**
 
 **[Jenkins](jenkins-deadsnakes2.sh) manager server:** Installed with Jenkins and the latest version of Python 3.9 package to create the necessary python environment for the application. This main server sends the necessary build scripts and files to each agent/virtual machine reducing resource contention and configuration drift.
 
@@ -212,8 +212,8 @@ ____________________________________________________________________________
 •	For Slack access on Jenkins: Configured credentials as a “secret text” like how we enter our AWS keys. Defined and set variables for slack webhook URL within Jenkinsfile to avoid directly hard coding and leaking our URL onto GitHub again. 
 
 
+____________________________________________________________________________________________________________
 **<ins>Application network infrastructure created in a new VPC in [appinfra.tf](intTerraform/appinfra.tf):**
-____________________________________________________________________________________________________________-
 
 •	1 VPC *(avoids any network conflicts, flexible network design, & isolates EKS cluster from other resources in AWS account)*
 
@@ -230,8 +230,8 @@ ________________________________________________________________________________
 •	2 route tables *(private route table to connect to the NAT gateway, public route table to connect the public subnets to the application load balancer)*
 
 
-**<ins>Necessary pre-configurations to be done on EKS cluster to provision the ALB controller:</ins>**
 ______________________________________________________________________________________________________
+**<ins>Necessary pre-configurations to be done on EKS cluster to provision the ALB controller:</ins>**
 
 * Provided permission to my AWS account to interact with our cluster through *OpenID*
 
@@ -245,9 +245,10 @@ ________________________________________________________________________________
 
 * Created certificate manager to secure the traffic from clients and associated ingress (incoming traffic) controller with the associated domain name that will be created to access our application through the load balancer.
 
- 
+
+ ______________________________________________________________________________________________________
 **<ins> Configured ALB controller:</ins>**
-_____________________________________________
+
 •	Downloaded v2_4_5_full.yaml file from GitHub: 
 ```wget https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases/download/v2.4.5/v2_4_5_full.yaml``` which acts as our *IngressClass.yaml* file to define the ingress controller we’re creating to handle the ALB controller resource to balance traffic load. *changed cluster name to our EKS cluster*
 
@@ -255,9 +256,9 @@ _____________________________________________
 
 •	Lasty, I ran: ```kubectl apply -k "github.com/aws/eks-charts/stable/aws-load-balancer-controller/crds"``` to apply Kubernetes resources that we download from an ingressclass.yaml file with pre-configured resource definitions so that AWS can manage the resources necessary to run the ALB efficiently.
 
-
+______________________________________________________________________________________________________
 **<ins>Installed cloudwatch agent:</ins>** 
-_________________________________________________
+
 *<ins>Found documentation for easy installation on AWS:</ins>*
 
 •	The following command attaches a role policy to my cluster by updating the policies under my IAM role to include the *CloudWatchAgentServerPolicy*:
@@ -271,9 +272,9 @@ _______________________________________________________________________
 
 
 3.	**<ins>System administrator configured Docker and Kubernetes files:</ins>**
-____________________________________________________________________________________
+
 **</ins>The [Dockerfile.frontend](Dockerfile.frontend)</ins> contains the frontend image:**
-____________________________________________________________________________________
+
 •	The image contains a React application and its node dependencies.
 
 •	The base image is node:10 which is the version the application needs
@@ -287,9 +288,9 @@ ________________________________________________________________________________
 •	The cmd to start the application is 
 ```CMD ["npm", "start"]```
 
-
+______________________________________________________________________________________________________
 **<ins>The [Dockerfile.backend](Dockerfile.backend)</ins> contains the backend image:**
-_______________________________________________________________________________________
+
 •	The image contains a Django REST API and its pip dependencies. The backend container is consumed by the frontend containers
 
 •	The base image is python:3.9, the python version the application expects
@@ -305,18 +306,18 @@ ________________________________________________________________________________
 •	The cmd to start the application is 
 ```CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]```
 
-
+______________________________________________________________________________________________________
 **<ins>Created AWS user accounts (user IAM roles) for team members:</ins>** 
-____________________________________________________________________________
+
 •	Create users for each team member
 
 •	The authorization for each user is copied from the System Admin
 
 •	Authentication is set by the System Admin and configured to prompt new users for a password on first login
 
-
+______________________________________________________________________________________________________
 **<ins>Provided AWS & Docker credentials for Jenkins:</ins>**
-______________________________________________________________
+
 **For AWS:**
 
 •	The ```Deploy to EKS``` stage in the Jenkins pipeline needs AWS credentials to execute the ```kubectl apply``` that creates the Kubernetes objects in our EKS cluster. The AWS access key and secret keys are stored as secret text in the Jenkins credentials utility. The credentials are then called by the Jenkinsfile and passed to the ```kubectl``` command in the Jenkinsfile.
@@ -326,55 +327,55 @@ ______________________________________________________________
 •	The Jenkins pipeline needs credentials from the Docker Hub where the images for the frontend and backend. Both ```Build Frontend``` and ```Build Backend``` steps use the Docker Hub username and token to login to Docker Hub and push the built image to the repository.
 
 •	Provisioned the agent nodes: The nodes for our cluster are provisioned in the private subnets as a measure of security. Neither the frontend or backend pods are directly accessible. The frontend ingress receives traffic only through the load balancer. The frontend containers access the backend through the backend service. 
-			
-**<ins>Kubernetes manifest:</ins>**
-__________________________________________
 
-The Kubernetes objects that are included in the Cluster are an ingress, 2 services, and 2 deployments for each node:
+______________________________________________________________________________________________________
+**<ins>Kubernetes manifest:</ins>**
+
+<ins>The Kubernetes objects that are included in the Cluster are an ingress, 2 services, and 2 deployments for each node:</ins>
 
 •	The [ingress.yaml](/KUBE_MANIFEST/ingress.yaml) defines the ingress that received traffic from the load balancer and allows it into the node. The Ingress then forwards traffic to the frontend service listening on port 3000.
 
-•	The [service.yaml](/KUBE_MANIFEST/service.yaml) includes the services for both the backend and frontend. Each service forwards traffic to its respective containers defined in the deployment.yaml:
+<ins>The [service.yaml](/KUBE_MANIFEST/service.yaml) includes the services for both the backend and frontend. Each service forwards traffic to its respective containers defined in the deployment.yaml:</ins>
 
- * The frontend service listens on port 3000 and forwards to port 3000 of the frontend containers
+- The frontend service listens on port 3000 and forwards to port 3000 of the frontend containers
     
- * The backend service listens on port 8000 and forwards to port 8000 of the backend containers
+- The backend service listens on port 8000 and forwards to port 8000 of the backend containers
     
-* The [deployment.yaml(/KUBE_MANIFEST/deployment.yaml) defines the configurations for the containers based on the backend and frontend images:
+<ins>The [deployment.yaml(/KUBE_MANIFEST/deployment.yaml) defines the configurations for the containers based on the backend and frontend images:</ins>
 
-    * The frontend image is configured to point to the backend service ``` "proxy": "http://d9-backend-service-nodeport:8000" ```
+- The frontend image is configured to point to the backend service ``` "proxy": "http://d9-backend-service-nodeport:8000" ```
 
-    * There are two containers per deployment to distribute that of the application between two replicas. This also implements some redundancy in case the health of  one of the containers is ina failing state, there is another to receive traffic while a replacement is spun back up
+- There are two containers per deployment to distribute that of the application between two replicas. This also implements some redundancy in case the health of  one of the containers is ina failing state, there is another to receive traffic while a replacement is spun back up
 
 ![kubectl objects](Deployment9Img/Kubeimg.png)
 
 
-_______________________________________________________________
+____________________________________________________________________________________________________________________________________________
 
 ## 4.	<ins>Data Engineer sifted through the database and provided visualizations that aided in:</ins>**
 _______________________________________________________________________________________________________
 
-•	Identifying Trends: Discovering recurring patterns or trends in data over time, which can be useful for predicting future behavior.
+•	**Identifying Trends:** Discovering recurring patterns or trends in data over time, which can be useful for predicting future behavior.
 
-•	Correlation Analysis: Determining relationships between different variables in the dataset to understand how changes in one variable may impact another.
+•	**Correlation Analysis:** Determining relationships between different variables in the dataset to understand how changes in one variable may impact another.
 
-•	Anomaly Detection: Recognizing unusual patterns or outliers in the data that may indicate errors, fraud, or unexpected behavior.
+•	**Anomaly Detection:** Recognizing unusual patterns or outliers in the data that may indicate errors, fraud, or unexpected behavior.
 
-•	Customer Behavior Analysis: Understanding how customers interact with a product or service, which can inform marketing strategies, product development, and customer satisfaction initiatives.
+•	**Customer Behavior Analysis:** Understanding how customers interact with a product or service, which can inform marketing strategies, product development, and customer satisfaction initiatives.
 
-•	Forecasting: Using historical data to make predictions about future trends, demand, or performance.
+•	**Forecasting:** Using historical data to make predictions about future trends, demand, or performance.
 
-•	Segmentation: Grouping data into distinct segments based on certain characteristics to tailor strategies or interventions to specific subpopulations.
+•	**Segmentation:** Grouping data into distinct segments based on certain characteristics to tailor strategies or interventions to specific subpopulations.
 
-•	Performance Metrics: Evaluating the performance of a system, process, or product based on key metrics and indicators.
+•	**Performance Metrics:** Evaluating the performance of a system, process, or product based on key metrics and indicators.
 
-•	Root Cause Analysis: Investigating the underlying causes of a problem or issue to address it at its source.
+•	**Root Cause Analysis:** Investigating the underlying causes of a problem or issue to address it at its source.
 
-•	Sentiment Analysis: Analyzing text data to understand the sentiment expressed by users, customers, or stakeholders
+•	**Sentiment Analysis:** Analyzing text data to understand the sentiment expressed by users, customers, or stakeholders
 
-•	Optimization Opportunities: Identifying areas where improvements can be made to enhance efficiency, reduce costs, or increase effectiveness.
+•	**Optimization Opportunities:** Identifying areas where improvements can be made to enhance efficiency, reduce costs, or increase effectiveness. 
 
-
+______________________________________________________________________________________________________
 ## 5. **<ins>Conclusion & Optimization</ins>**
 ________________________________________________________
 
@@ -384,8 +385,8 @@ ________________________________________________________
 
 &emsp;&emsp;&emsp;&emsp;  EKS further enhances security over our application infrastructure with our bastion host/EKS agent server by connecting the kubelet in our nodes to the Kubernetes API, making it an optimal platform choice in load balancing, scaling, and managing accessibility of our microservices in our application. Additionally, as a cost saving measure, the nodes are on t2.medium EC2 instances rather than the default m5.large nodes that the ```eksctl create cluster``` command provides. 
 
+______________________________________________________________________________________________________
 **<ins>Different ways to improve optimization:</ins>**
-________________________________________________________
 
 **Fault tolerance:**
 
