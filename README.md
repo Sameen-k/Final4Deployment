@@ -151,27 +151,27 @@ ____________________________________________________________
 	- Created main GitHub repo → Go to *Settings* → Select *Collaborators* → Select *Add people* to add team members so we could all work on one repo and work on our Jenkins pipeline together and separately if needed.
 
 
-* <ins>Git Commits taken by the team</ins>:
+<ins>Git Commits taken by the team</ins>:
 
-*git clone* - Used VS code editor to easily make changes to my remote repo on GitHub
+* *git clone* - Used VS code editor to easily make changes to my remote repo on GitHub
 
-*cd .git, nano config* - Added GitHub URL for the main repo in my .git config file to give VS code permission remote repo
+* *cd .git, nano config* - Added GitHub URL for the main repo in my .git config file to give VS code permission remote repo
 
-*git branch second* - to create and make changes in the second branch 
+* *git branch second* - to create and make changes in the second branch 
 
-*git merge* - to resolve any merging conflicts and resolve files 
+* *git merge* - to resolve any merging conflicts and resolve files 
 
-*git add .*  - to update changes in each branch
+* *git add .*  - to update changes in each branch
 
-*git commit -m "message"* - to finalize changes to repo with message description
+* *git commit -m "message"* - to finalize changes to repo with message description
 
-*git push* - push changes back to remote GitHub repo
+* *git push* - push changes back to remote GitHub repo
 
 ___________________________________________________________________________
 
 2.	**<ins>Chief architect managed system design and infrastructure:</ins>** 
 
-	![sd](Deployment9Img/DEPLOYMENT9.png)
+	![sd](Deployment9Img/dep9v2.png)
 
 **<ins>Configured *staging environment* with [Jenkins infrastructure](main.tf) and CI/CD pipeline stages with [Jenkinsfile](Jenkinsfile):</ins>**
 
@@ -245,6 +245,8 @@ ________________________________________________________________________________
 
 * Created certificate manager to secure the traffic from clients and associated ingress (incoming traffic) controller with the associated domain name that will be created to access our application through the load balancer.
 
+* List of polocies under my AWSLoadBalancerControllerRole:
+![policies](Deployment9Img/iamroles.png)
 
  ______________________________________________________________________________________________________
 **<ins> Configured ALB controller:</ins>**
@@ -256,6 +258,7 @@ ________________________________________________________________________________
 
 •	Lasty, I ran: ```kubectl apply -k "github.com/aws/eks-charts/stable/aws-load-balancer-controller/crds"``` to apply Kubernetes resources that we download from an ingressclass.yaml file with pre-configured resource definitions so that AWS can manage the resources necessary to run the ALB efficiently.
 
+![alb](Deployment9Img/load balancer.png)
 ______________________________________________________________________________________________________
 **<ins>Installed cloudwatch agent:</ins>** 
 
@@ -268,6 +271,10 @@ ________________________________________________________________________________
 * <ins>The following command installs the necessary add-on for CloudWatch monitoring to observe and function properly:</ins>*
 
 ```aws eks create-addon --cluster-name * pre-existing cluster-name* --addon-name amazon-cloudwatch-observability```
+
+Cloudwatch log groups:
+![cw](Deployment9Img/cloudwatchlogs.png)
+
 _______________________________________________________________________
 
 
@@ -340,6 +347,10 @@ ________________________________________________________________________________
 - The frontend service listens on port 3000 and forwards to port 3000 of the frontend containers
     
 - The backend service listens on port 8000 and forwards to port 8000 of the backend containers
+
+* EKS takes care of many services necessary for our application to work including our target zones so that our ALB gets automatically directed to the ones opened in our services:
+
+![target](Deployment9Img/targetgroup.png)
     
 <ins>The [deployment.yaml(/KUBE_MANIFEST/deployment.yaml) defines the configurations for the containers based on the backend and frontend images:</ins>
 
@@ -349,6 +360,9 @@ ________________________________________________________________________________
 
 ![kubectl objects](Deployment9Img/Kubeimg.png)
 
+- Successful Slack notification & Deployment of our E-commerce application:
+
+![deploy](Deployment9Img/FrontEndImg.png)
 
 ____________________________________________________________________________________________________________________________________________
 
