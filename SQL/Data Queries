@@ -45,6 +45,7 @@ print("\nUnpaid Orders Analysis:")
 print(result_unpaid_orders)
 
 
+
 *Actual Revenue:*
 query_actual_revenue = "SELECT SUM(total_price) AS actual_revenue FROM account_ordermodel WHERE paid_status = 1;"
 result_actual_revenue = pd.read_sql_query(query_actual_revenue, conn)
@@ -54,7 +55,6 @@ print(result_actual_revenue)
 
 
 *Convert Rupees to USD:*
-
 # The exchange rate is 1 Rupee to 0.012 USD
 exchange_rate = 0.012
 
@@ -72,7 +72,6 @@ print(f"Actual Revenue in USD: {actual_revenue_in_usd:.2f}")
 
 
 *Compare the actual revenue with the potential revenue from unpaid orders:*
-
 actual_revenue_in_rupees = 164342100
 lost_revenue_in_usd = 1973367.60
 
