@@ -53,7 +53,7 @@ pipeline {
                         sh """
                             curl -X POST -H 'Content-type: application/json' \
                             --data '{"text":"Jenkins Pipeline Complete!"}' \
-                            ${SLACK_WEBHOOK_CREDENTIALS}
+                            $SLACK_WEBHOOK_CREDENTIALS
                         """
                     }
                 }
