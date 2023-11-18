@@ -273,7 +273,7 @@ ________________________________________________________________________________
 ```aws eks create-addon --cluster-name * pre-existing cluster-name* --addon-name amazon-cloudwatch-observability```
 
 Cloudwatch log groups:
-![cw](Deployment9Img/load_balancer.png)
+![cw](Deployment9Img/cloudwatchlogs.png)
 
 _______________________________________________________________________
 
