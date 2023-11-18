@@ -16,6 +16,16 @@ ____________________________________________________
 <ins>**Application Stack:**</ins>: *Infrastructure:* AWS EKS & Terraform, *Containerization:* Docker, *CI/CD:* Jenkins, *FrontEnd:* Django, 
 *BackEnd:* React, *DataBase:* SQLite
 
+_________________________________________________________________
+## <ins>Description</ins>
+_____________________________________________________________
+
+&emsp;&emsp;&emsp;&emsp;	The application follows a single tier microservices architecture as the frontend and backend are deployed within the same nodes with three logical layers. Our front end was where clients could access our Django web application in a node.js environment, our back end was connected to our React App where our services lie, and our database was stored in an SQLite file along with our application layer, which can cause security issues later. The backend is using the Kubernetes API to connect to different endpoints that lead to our microservices into our pods/containers within our private network cluster, manually configured on our EKS agent server using our yaml files– *ingress* to create port access, *service* for configurations of our app, and *deployment* to orchestrate how our deployment runs and replicates. 
+
+&emsp;&emsp;&emsp;&emsp;	Docker containers encapsulate the images and Docker files necessary for our application and AWS EKS manages the orchestration of these containers. Instead of providing more configurations for our container, EKS takes care of that through a control plane that holds the Kubernetes API and other services for our application infrastructure. Our Jenkins and application infrastructure were automatically provisioned through Terraform, discussed further below. Jenkins was particularly important because our Jenkins file was configured to automate the building of our Docker images through Docker Hub,  deploying to our EKS cluster, and connecting to our team’s Slack channel to notify us when our Jenkins pipeline ran successfully. 
+
+&emsp;&emsp;&emsp;&emsp;	Additionally, AWS user access and GitHub collaboration created a positive team workflow for everyone to aid in the deployment process and were proven to be instrumental in problem-solving and troubleshooting for our team.   Incorporating data analysis from database insights from our data engineer also shows how different trends and correlation analysis can create informed decision-making for a team or business. Collaboration enhances efficiency and ensures a comprehensive deployment.
+
 _________________________________________________________
 ## <ins>DevOps Issues</ins>
 _______________________________________________________
@@ -126,18 +136,6 @@ _______________________________________________________
        result.dtypes
        ```
     2. **Correct Data Type:** Ensured the data type is suitable for conversion, changing it to a numeric type.
-
-_________________________________________________________________
-## <ins>Description</ins>
-_____________________________________________________________
-
-&emsp;&emsp;&emsp;&emsp;	The application follows a single tier microservices architecture as the frontend and backend are deployed within the same nodes with three logical layers. Our front end was where clients could access our Django web application in a node.js environment, our back end was connected to our React App where our services lie, and our database was stored in an SQLite file along with our application layer, which can cause security issues later. The backend is using the Kubernetes API to connect to different endpoints that lead to our microservices into our pods/containers within our private network cluster, manually configured on our EKS agent server using our yaml files– *ingress* to create port access, *service* for configurations of our app, and *deployment* to orchestrate how our deployment runs and replicates. 
-
-&emsp;&emsp;&emsp;&emsp;	Docker containers encapsulate the images and Docker files necessary for our application and AWS EKS manages the orchestration of these containers. Instead of providing more configurations for our container, EKS takes care of that through a control plane that holds the Kubernetes API and other services for our application infrastructure. 
-
-&emsp;&emsp;&emsp;&emsp;	Our Jenkins and application infrastructure were automatically provisioned through Terraform, discussed further below. Jenkins was particularly important because our Jenkins file was configured to automate the building of our Docker images through Docker Hub,  deploying to our EKS cluster, and connecting to our team’s Slack channel to notify us when our Jenkins pipeline ran successfully. 
-
-&emsp;&emsp;&emsp;&emsp;	Additionally, AWS user access and GitHub collaboration created a positive team workflow for everyone to aid in the deployment process and were proven to be instrumental in problem-solving and troubleshooting for our team.   Incorporating data analysis from database insights from our data engineer also shows how different trends and correlation analysis can create informed decision-making for a team or business. Collaboration enhances efficiency and ensures a comprehensive deployment.
 
 __________________________________________________________
 ##<ins> Project Organization:</ins>
