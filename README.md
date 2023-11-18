@@ -258,7 +258,7 @@ ________________________________________________________________________________
 
 •	Lasty, I ran: ```kubectl apply -k "github.com/aws/eks-charts/stable/aws-load-balancer-controller/crds"``` to apply Kubernetes resources that we download from an ingressclass.yaml file with pre-configured resource definitions so that AWS can manage the resources necessary to run the ALB efficiently.
 
-![cw](Deployment9Img/load balancer.png)</ins>
+![cw](Deployment9Img/load_balancer.png)</ins>
 ______________________________________________________________________________________________________
 **<ins>Installed cloudwatch agent:</ins>** 
 
