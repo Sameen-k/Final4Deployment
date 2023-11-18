@@ -50,11 +50,11 @@ pipeline {
         stage('Slack Notification') {
             steps {
                 script {
-                    withCredentials([string(credentialsId: SLACK_WEBHOOK_CREDENTIALS, variable: 'slackWebhookUrl')]) {
+                    withCredentials([string(credentialsId: SLACK_WEBHOOK_CREDENTIALS, variable: 'SLACK_WEBHOOK_CREDENTIALS')]) {
                         sh """
                             curl -X POST -H 'Content-type: application/json' \
                             --data '{"text":"Jenkins Pipeline Complete!"}' \
-                            ${slackWebhookUrl}
+                            ${SLACK_WEBHOOK_CREDENTIALS}
                         """
                     }
                 }
