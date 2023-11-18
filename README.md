@@ -191,11 +191,11 @@ ____________________________________________________________________________
 
 **[Docker](dockeragent2.sh) agent server:** The docker agent receives the job execution request from the main server when our pipeline initiates when the Docker build stages are triggered through Jenkins when we select “Build Now”: 
 
-	*Docker build* to create images described within our Docker files for the application’s front-end and back-end.
+ *Docker build* to create images described within our Docker files for the application’s front-end and back-end.
 
-	*Docker login* to provide access to our Docker Hub account which is instrumental in connecting our application image to our Kubernetes pods/containers.
+ *Docker login* to provide access to our Docker Hub account which is instrumental in connecting our application image to our Kubernetes pods/containers.
 
-	*Docker push* to push the latest image version back to Docker Hub so that our changes to our main repo are reflected correctly in our application code.
+ *Docker push* to push the latest image version back to Docker Hub so that our changes to our main repo are reflected correctly in our application code.
 
 **<ins>Stage: Deploy to EKS:</ins>**
 
@@ -248,11 +248,12 @@ ________________________________________________________________________________
  
 **<ins> Configured ALB controller:</ins>**
 _____________________________________________
-•	Downloaded v2_4_5_full.yaml file from GitHub: *wget https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases/download/v2.4.5/v2_4_5_full.yaml* which acts as our *IngressClass.yaml* file to define the ingress controller we’re creating to handle the ALB controller resource to balance traffic load. *changed cluster name to our EKS cluster*
+•	Downloaded v2_4_5_full.yaml file from GitHub: 
+```wget https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases/download/v2.4.5/v2_4_5_full.yaml``` which acts as our *IngressClass.yaml* file to define the ingress controller we’re creating to handle the ALB controller resource to balance traffic load. *changed cluster name to our EKS cluster*
 
-•	Configure the Kubernetes ingressclass.yaml file to our cluster by running: *kubectl apply -f v2_4_5_full.yaml*. 
+•	Configure the Kubernetes ingressclass.yaml file to our cluster by running: ```kubectl apply -f v2_4_5_full.yaml```
 
-•	Lasty, I ran: *kubectl apply -k "github.com/aws/eks-charts/stable/aws-load-balancer-controller/crds"* to apply Kubernetes resources that we download from an ingressclass.yaml file with pre-configured resource definitions so that AWS can manage the resources necessary to run the ALB efficiently.
+•	Lasty, I ran: ```kubectl apply -k "github.com/aws/eks-charts/stable/aws-load-balancer-controller/crds"``` to apply Kubernetes resources that we download from an ingressclass.yaml file with pre-configured resource definitions so that AWS can manage the resources necessary to run the ALB efficiently.
 
 
 **<ins>Installed cloudwatch agent:</ins>** 
@@ -261,11 +262,11 @@ _________________________________________________
 
 •	The following command attaches a role policy to my cluster by updating the policies under my IAM role to include the *CloudWatchAgentServerPolicy*:
   
-    - aws iam attach-role-policy \--role-name *name of IAM policy on worker-nodes* \ --policy-arn arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
+```aws iam attach-role-policy \--role-name *name of IAM policy on worker-nodes* \ --policy-arn arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy```
 
 * <ins>The following command installs the necessary add-on for CloudWatch monitoring to observe and function properly:</ins>*
 
-    - aws eks create-addon --cluster-name * pre-existing cluster-name* --addon-name amazon-cloudwatch-observability
+```aws eks create-addon --cluster-name * pre-existing cluster-name* --addon-name amazon-cloudwatch-observability```
 _______________________________________________________________________
 
 
@@ -335,9 +336,9 @@ The Kubernetes objects that are included in the Cluster are an ingress, 2 servic
 
 •	The [service.yaml](/KUBE_MANIFEST/service.yaml) includes the services for both the backend and frontend. Each service forwards traffic to its respective containers defined in the deployment.yaml:
 
-    * The frontend service listens on port 3000 and forwards to port 3000 of the frontend containers
+ * The frontend service listens on port 3000 and forwards to port 3000 of the frontend containers
     
-    * The backend service listens on port 8000 and forwards to port 8000 of the backend containers
+ * The backend service listens on port 8000 and forwards to port 8000 of the backend containers
     
 * The [deployment.yaml(/KUBE_MANIFEST/deployment.yaml) defines the configurations for the containers based on the backend and frontend images:
 
