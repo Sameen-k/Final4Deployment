@@ -1,5 +1,6 @@
 ## <ins>KURA HITTERS</ins>
-###November 18, 2023
+
+### November 18, 2023
 
 #### *Project Manager:* Ethan Arteta
 #### *Chief Architect:* Danielle Davis
@@ -142,8 +143,11 @@ _________________________________________________________________
 _____________________________________________________________
 
 &emsp;&emsp;&emsp;&emsp;	The application follows a single tier microservices architecture as the frontend and backend are deployed within the same nodes with three logical layers. Our front end was where clients could access our Django web application in a node.js environment, our back end was connected to our React App where our services lie, and our database was stored in an SQLite file along with our application layer, which can cause security issues later. The backend is using the Kubernetes API to connect to different endpoints that lead to our microservices into our pods/containers within our private network cluster, manually configured on our EKS agent server using our yaml files– *ingress* to create port access, *service* for configurations of our app, and *deployment* to orchestrate how our deployment runs and replicates. 
+
 &emsp;&emsp;&emsp;&emsp;	Docker containers encapsulate the images and Docker files necessary for our application and AWS EKS manages the orchestration of these containers. Instead of providing more configurations for our container, EKS takes care of that through a control plane that holds the Kubernetes API and other services for our application infrastructure. 
+
 &emsp;&emsp;&emsp;&emsp;	Our Jenkins and application infrastructure were automatically provisioned through Terraform, discussed further below. Jenkins was particularly important because our Jenkins file was configured to automate the building of our Docker images through Docker Hub,  deploying to our EKS cluster, and connecting to our team’s Slack channel to notify us when our Jenkins pipeline ran successfully. 
+
 &emsp;&emsp;&emsp;&emsp;	Additionally, AWS user access and GitHub collaboration created a positive team workflow for everyone to aid in the deployment process and were proven to be instrumental in problem-solving and troubleshooting for our team.   Incorporating data analysis from database insights from our data engineer also shows how different trends and correlation analysis can create informed decision-making for a team or business. Collaboration enhances efficiency and ensures a comprehensive deployment.
 
 __________________________________________________________
@@ -154,13 +158,13 @@ ____________________________________________________________
 
 
 1.	**<ins>Project manager created team workspace:</ins>** 
-•	Created a free account and [Jira Board](https://www.atlassian.com/software/jira)
+
+	- Created a free account and [Jira Board](https://www.atlassian.com/software/jira)
+
+	- Created main GitHub repo → Go to *Settings* → Select *Collaborators* → Select *Add people* to add team members so we could all work on one repo and work on our Jenkins pipeline together and separately if needed.
 
 
-•	Created main GitHub repo → Go to *Settings* → Select *Collaborators* → Select *Add people* to add team members so we could all work on one repo and work on our Jenkins pipeline together and separately if needed.
-
-
-•	<ins>Git Commits taken by the team</ins>:
+* <ins>Git Commits taken by the team</ins>:
 
 *git clone* - Used VS code editor to easily make changes to my remote repo on GitHub
 
@@ -183,11 +187,11 @@ ___________________________________________________________________________
 
 	![sd](Deployment9Img/DEPLOYMENT9.png)
 
-<ins>Configured *staging environment* with **[Jenkins infrastructure](main.tf)** and CI/CD pipeline stages with **[Jenkinsfile](Jenkinsfile):**</ins>
+* <ins>Configured *staging environment* with **[Jenkins infrastructure](main.tf)** and CI/CD pipeline stages with **[Jenkinsfile](Jenkinsfile):**</ins>
 
 **[Jenkins](jenkins-deadsnakes2.sh) manager server:** Installed with Jenkins and the latest version of Python 3.9 package to create the necessary python environment for the application. This main server sends the necessary build scripts and files to each agent/virtual machine reducing resource contention and configuration drift.
 
-**<ins>Stage: Environment variables*:</ins>**
+**<ins>Stage: Environment variables:</ins>**
 
 *DOCKERHUB_CREDENTIALS** *(to connect Jenkins pipeline to our docker image storage tool to create/run containers created for deployment)
 
@@ -239,25 +243,19 @@ ___________________________________________________________________________
 
 •	2 route tables *(private route table to connect to the NAT gateway, public route table to connect the public subnets to the application load balancer)*
 
-*<ins>Pre-configurations on EKS cluster to provision the ALB controller:</ins>*
+**<ins>Necessary pre-configurations to be done on EKS cluster to provision the ALB controller:</ins>**
 
+	- Provided permission to my AWS account to interact with our cluster through *OpenID*
 
-•	Provided permission to my AWS account to interact with our cluster through *OpenID*
+	- Added new tags: the key being: “kubernetes.io/role/elb” and the value: “1” so that  Kubernetes could identify the suitability of our public subnets to host our application load balancer. 
 
+	- Downloaded iampolicy.json file in our EKS cluster to define what is allowable and what isn’t when accessing our application. 
 
-•	Added new tags: the key being: “kubernetes.io/role/elb” and the value: “1” so that  Kubernetes could identify the suitability of our public subnets to host our application load balancer. 
+	- Downloaded “AWSLoadBalancerControllerIAMPolicy to give permission to my cluster to use my ALB controller.
 
+	- Create a service account that is used to control access to our ingress controller to interact with our ALB in our EKS cluster.
 
-•	Downloaded iampolicy.json file in our EKS cluster to define what is allowable and what isn’t when accessing our application. 
-
-
-•	Downloaded “AWSLoadBalancerControllerIAMPolicy to give permission to my cluster to use my ALB controller.
-
-
-•	Create a service account that is used to control access to our ingress controller to interact with our ALB in our EKS cluster.
-
-
-•	Created certificate manager to secure the traffic from clients and associated ingress (incoming traffic) controller with the associated domain name that will be created to access our application through the load balancer.
+	- Created certificate manager to secure the traffic from clients and associated ingress (incoming traffic) controller with the associated domain name that will be created to access our application through the load balancer.
 	
 **<ins> Configured ALB controller:</ins>**
 
