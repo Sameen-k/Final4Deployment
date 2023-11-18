@@ -24,9 +24,8 @@ pipeline {
                 sh 'docker build -t morenodoesinfra/d8-frontend:v4git -f Dockerfile.frontend .'
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 sh 'docker push morenodoesinfra/d8-frontend:v4'
-                }
             }
-        
+        }
 
         stage('Deploy to EKS') {
             agent {
@@ -47,13 +46,13 @@ pipeline {
 
         stage('Slack Notification') {
             steps {
-                script {
-                    withCredentials([string(credentialsId: SLACK_WEBHOOK_CREDENTIALS, variable: 'SLACK_WEBHOOK_CREDENTIALS')]) {
-                        sh """
-                            curl -X POST -H 'Content-type: application/json' \
-                            --data '{"text":"Jenkins Pipeline Complete!"}' \
-                            $SLACK_WEBHOOK_CREDENTIALS
-                        """
+                 script {
+                    withCredentials([string(credentialsId: 'slack-webhook-url', variable: 'SLACK_WEBHOOK')]) {
+                        echo "Sending Slack notification"
+
+                        def message = '{"text": "Pipeline completed successfully!"}'
+
+                        sh "curl -X POST -H 'Content-type: application/json' --data '${message}' ${SLACK_WEBHOOK}"
                     }
                 }
             }
