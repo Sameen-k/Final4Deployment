@@ -352,7 +352,7 @@ ________________________________________________________________________________
 
 ![target](Deployment9Img/targetgroup.png)
     
-<ins>The [deployment.yaml(/KUBE_MANIFEST/deployment.yaml) defines the configurations for the containers based on the backend and frontend images:</ins>
+<ins>The [deployment.yaml](/KUBE_MANIFEST/deployment.yaml) defines the configurations for the containers based on the backend and frontend images:</ins>
 
 - The frontend image is configured to point to the backend service ``` "proxy": "http://d9-backend-service-nodeport:8000" ```
 
