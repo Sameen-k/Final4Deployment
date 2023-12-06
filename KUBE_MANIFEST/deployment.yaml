@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: d9-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: d9-backend
+  template:
+    metadata:
+      labels:
+        app: d9-backend
+    spec:
+      containers:
+        - name: d9-backend
+          image: morenodoesinfra/d8-backend:v1
+          ports:
+            - name: http
+              containerPort: 8000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: d9-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: d9-frontend
+  template:
+    metadata:
+      labels:
+        app: d9-frontend
+    spec:
+      containers:
+        - name: d9-frontend
+          image: morenodoesinfra/d8-frontend:v4
+          ports:
+            - name: http
+              containerPort: 3000             
