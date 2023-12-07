@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: d9-backend
+  name: APIbackend
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: d9-backend
+      app: API.NET-backend
   template:
     metadata:
       labels:
-        app: d9-backend
+        app: API.NET-backend
     spec:
       containers:
-        - name: d9-backend
-          image: morenodoesinfra/d8-backend:v1
+        - name: API.NET-backend
+          image: dannydee93/api.net_app:latest
           ports:
             - name: http
               containerPort: 8000
@@ -22,20 +22,21 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: d9-frontend
+  name: kestrel-frontend
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: d9-frontend
+      app: kestrel-frontend
   template:
     metadata:
       labels:
-        app: d9-frontend
+        app: kestrel-frontend
     spec:
       containers:
-        - name: d9-frontend
-          image: morenodoesinfra/d8-frontend:v4
+        - name: kestrel-frontend
+          image: dannydee93/kestrel_web:latest
           ports:
             - name: http
-              containerPort: 3000             
+              containerPort: 80             
+

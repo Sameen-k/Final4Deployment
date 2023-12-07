@@ -5,25 +5,25 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dannydee93-dockerhub')
-        AWS_EKS_CLUSTER_NAME = 'Final4Cluster'
+        AWS_EKS_CLUSTER_NAME = 'final4cluster'
         AWS_EKS_REGION = 'us-east-1'
-        KUBE_MANIFESTS_DIR = '/home/ubuntu//agent2/workspace/e-commerce-pipeline_main/KUBE_MANIFEST'
+        KUBE_MANIFESTS_DIR = '/home/ubuntu/Final4Deployment/KUBE_MANIFEST'
     }          
 
     stages {
         stage('Build Backend') {
             steps {
-                sh 'docker build -t morenodoesinfra/d8-backend:v1 -f Dockerfile.backend .'
+                sh 'docker build -t dannydee93/api.net_app:latest -f Dockerfile.backend .'
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker push morenodoesinfra/d8-backend:v1'
+                sh 'docker push dannydee93/api.net_app:latest'
             }
         }
 
         stage('Build Frontend') {
             steps {
-                sh 'docker build -t morenodoesinfra/d8-frontend:v4 -f Dockerfile.frontend .'
+                sh 'docker build -t dannydee93/kestrel_web:latest -f Dockerfile.frontend .'
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker push morenodoesinfra/d8-frontend:v4'
+                sh 'docker push dannydee93/kestrel_web:latest'
             }
         }
 
@@ -46,18 +46,5 @@ pipeline {
             }
         }
 
-        stage('Slack Notification') {
-            steps {
-                 script {
-                    withCredentials([string(credentialsId: 'slack-webhook-url', variable: 'SLACK_WEBHOOK')]) {
-                        echo "Sending Slack notification"
-
-                        def message = '{"text": "Pipeline completed successfully!"}'
-
-                        sh "curl -X POST -H 'Content-type: application/json' --data '${message}' ${SLACK_WEBHOOK}"
-                    }
-                }
-            }
-        }
     }
 }
