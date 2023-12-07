@@ -16,8 +16,8 @@ spec:
         - name: API.NET-backend
           image: dannydee93/api.net_app:latest
           ports:
-            - name: http
-              containerPort: 8000
+            - containerPort: 80
+            - containerPort: 443
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -37,6 +37,6 @@ spec:
         - name: kestrel-frontend
           image: dannydee93/kestrel_web:latest
           ports:
-            - name: http
-              containerPort: 80             
+            - containerPort: 80
+            - containerPort: 443           
 
