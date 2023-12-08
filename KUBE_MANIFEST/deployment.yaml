@@ -3,19 +3,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kestrel-frontend
+  name: web
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: kestrel-frontend
+      app: web
   template:
     metadata:
       labels:
-        app: kestrel-frontend
+        app: web
     spec:
       containers:
-        - name: kestrel-frontend
+        - name: web
           image: dannydee93/eshopwebmvc:latest
           ports:
             - containerPort: 80
@@ -24,19 +24,19 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: APIbackend
+  name: api
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: API.NET-backend
+      app: api
   template:
     metadata:
       labels:
-        app: API.NET-backend
+        app: api
     spec:
       containers:
-        - name: API.NET-backend
+        - name: api
           image: dannydee93/eshoppublicapi:latest
           ports:
             - containerPort: 80
