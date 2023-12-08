@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: API.NET-backend
-          image: dannydee93/api.net_app:latest
+          image: dannydee93/eshoppublicapi:latest
           ports:
             - containerPort: 80
             - containerPort: 443
@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
         - name: kestrel-frontend
-          image: dannydee93/kestrel_web:latest
+          image: dannydee93/eshopwebmvc:latest
           ports:
             - containerPort: 80
             - containerPort: 443           
