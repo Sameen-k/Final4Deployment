@@ -10,7 +10,6 @@ pipeline {
                     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                     sh 'docker push dannydee93/eshopwebmvc'
                     sh 'docker push dannydee93/eshoppublicapi'
-                    sh 'docker push dannydee93/kestrel_web'
             }
         }
 
