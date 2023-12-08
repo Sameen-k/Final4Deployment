@@ -6,9 +6,6 @@ pipeline {
             agent { label 'agentDocker' }
             steps {
                 sh 'docker-compose build'
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker push dannydee93/eshopwebmvc'
-                sh 'docker push dannydee93/eshoppublicapi'
             }
         }
         stage('Login and Push') {
