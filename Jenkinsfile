@@ -1,9 +1,10 @@
 pipeline {
-    agent { label 'awsDeploy' }
+        agent any
 
 
     stages {
         stage('Build Backend') {
+            agent { label 'awsDeploy2' }
             steps {
                 sh 'docker build -t dannydee93/api.net_app -f src/PublicApi/Dockerfile .'
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
@@ -12,6 +13,7 @@ pipeline {
         }
 
         stage('Build Frontend') {
+            agent { label 'awsDeploy2' }
             steps {
                 dir('src') {
                     sh 'docker build -t dannydee93/kestrel_web -f src/Web/Dockerfile .'
