@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service 
 metadata:
-  name: webservice
+  name: web-service
 spec:
   type: NodePort
   selector:
@@ -14,7 +14,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: apiservice
+  name: api-service
 spec:
   type: NodePort
   selector:
@@ -27,7 +27,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: sqlserverservice
+  name: sql-serverservice
 spec:
   selector:
     app: sqlserver
