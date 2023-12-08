@@ -12,6 +12,7 @@ COPY . .
 #RUN dotnet restore "./PublicApi/PublicApi.csproj"
 #COPY . .
 WORKDIR "/app/src/PublicApi"
+COPY . .
 RUN dotnet restore
 
 RUN dotnet build "./PublicApi.csproj" -c Release -o /app/build
