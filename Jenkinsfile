@@ -4,16 +4,11 @@ pipeline {
     stages {
         stage('Build Images') {
             steps {
-                script {
-                    withCredentials([
-                        string(credentialsId: 'DOCKERHUB_CREDENTIALS_USR', variable: 'DOCKERHUB_CREDENTIALS_USR'),
-                        string(credentialsId: 'DOCKERHUB_CREDENTIALS_PSW', variable: 'DOCKERHUB_CREDENTIALS_PSW')
-                    ]) {
-                        sh 'docker-compose build'
-                        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                        sh 'docker push dannydee93/eshopwebmvc'
-                        sh 'docker push dannydee93/eshoppublicapi'
-                    }
+                withCredentials([usernamePassword(credentialsId: 'dannydee93-dockerhub', usernameVariable: 'DOCKERHUB_CREDENTIALS_USR', passwordVariable: 'DOCKERHUB_CREDENTIALS_PSW')]) {
+                    sh 'docker-compose build'
+                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                    sh 'docker push dannydee93/eshopwebmvc'
+                    sh 'docker push dannydee93/eshoppublicapi'
                 }
             }
         }
