@@ -13,17 +13,18 @@ pipeline {
     stages {
         stage('Build Backend') {
             steps {
-                sh 'docker build -t dannydee93/api.net_app:latest -f Dockerfile.backend .'
+                sh 'docker build -t dannydee93/api.net_app -f Dockerfile.backend .'
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker push dannydee93/api.net_app:latest'
+                sh 'docker push dannydee93/api.net_app'
             }
         }
 
         stage('Build Frontend') {
             steps {
-                sh 'docker build -t dannydee93/kestrel_web:latest -f Dockerfile.frontend .'
+                dir('src') {
+                sh 'docker build -t dannydee93/kestrel_web -f Dockerfile.frontend .'
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker push dannydee93/kestrel_web:latest'
+                sh 'docker push dannydee93/kestrel_web'
             }
         }
 
