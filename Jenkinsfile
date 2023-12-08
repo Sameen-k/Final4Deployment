@@ -1,14 +1,12 @@
 pipeline {
-    agent {
-        label 'awsDeploy'
-    }
+    agent { label 'awsDeploy' }
 
-environment {
+    environment {
         DOCKERHUB_CREDENTIALS = credentials('dannydee93-dockerhub')
         AWS_EKS_CLUSTER_NAME = 'final4cluster'
         AWS_EKS_REGION = 'us-east-1'
         KUBE_MANIFESTS_DIR = '/home/ubuntu/Final4Deployment/KUBE_MANIFEST'
-    }          
+    }
 
     stages {
         stage('Build Backend') {
@@ -22,23 +20,20 @@ environment {
         stage('Build Frontend') {
             steps {
                 dir('src') {
-                sh 'docker build -t dannydee93/kestrel_web -f src/Web/Dockerfile .'
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker push dannydee93/kestrel_web'
+                    sh 'docker build -t dannydee93/kestrel_web -f src/Web/Dockerfile .'
+                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                    sh 'docker push dannydee93/kestrel_web'
+                }
             }
         }
 
-
-        
         stage('Deploy to EKS') {
-            agent {
-                label 'awsDeploy3'
-            }
+            agent { label 'awsDeploy3' } // or use 'awsDeploy3' if intended
             steps {
                 script {
                     withCredentials([
-                        string(credentialsId: 'AWS_ACCESS_KEY', variable: 'aws_access_key'),
-                        string(credentialsId: 'AWS_SECRET_KEY', variable: 'aws_secret_key')
+                        string(credentialsId: 'AWS_ACCESS_KEY', variable: 'AWS_ACCESS_KEY_ID'),
+                        string(credentialsId: 'AWS_SECRET_KEY', variable: 'AWS_SECRET_ACCESS_KEY')
                     ]) {
                         sh "aws eks --region $AWS_EKS_REGION update-kubeconfig --name $AWS_EKS_CLUSTER_NAME"
                         sh "kubectl apply -f $KUBE_MANIFESTS_DIR"
@@ -46,6 +41,5 @@ environment {
                 }
             }
         }
-
     }
 }
