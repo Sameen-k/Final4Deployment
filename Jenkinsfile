@@ -1,8 +1,8 @@
 pipeline {
     agent any
 
+    stages {
         stage('Deploy to EKS') {
-            agent { label 'agentEKS' }
             steps {
                 script {
                     withCredentials([
