@@ -1,3 +1,26 @@
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kestrel-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: kestrel-frontend
+  template:
+    metadata:
+      labels:
+        app: kestrel-frontend
+    spec:
+      containers:
+        - name: kestrel-frontend
+          image: dannydee93/eshopwebmvc:latest
+          ports:
+            - containerPort: 80
+            - containerPort: 443          
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -22,21 +45,25 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kestrel-frontend
+  name: sqlserver
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: kestrel-frontend
+      app: sqlserver
   template:
     metadata:
       labels:
-        app: kestrel-frontend
+        app: sqlserver
     spec:
       containers:
-        - name: kestrel-frontend
-          image: dannydee93/eshopwebmvc:latest
+        - name: sqlserver
+          image: mcr.microsoft.com/azure-sql-edge
           ports:
-            - containerPort: 80
-            - containerPort: 443           
+            - containerPort: 1433
+          env:
+            - name: SA_PASSWORD
+              value: "@someThingComplicated1234"
+            - name: ACCEPT_EULA
+              value: "Y" 
 
