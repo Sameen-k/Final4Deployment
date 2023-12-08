@@ -18,7 +18,8 @@ spec:
         - name: web
           image: dannydee93/eshopwebmvc:latest
           ports:
-            - containerPort: 80        
+            - containerPort: 80
+            - containerPort: 443         
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -39,6 +40,7 @@ spec:
           image: dannydee93/eshoppublicapi:latest
           ports:
             - containerPort: 80
+            - containerPort: 443
 ---
 apiVersion: apps/v1
 kind: Deployment
