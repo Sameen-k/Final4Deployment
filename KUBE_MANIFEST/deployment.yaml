@@ -60,7 +60,8 @@ spec:
         - name: sqlserver
           image: mcr.microsoft.com/azure-sql-edge
           ports:
-            - containerPort: 1433
+            - name: http
+              containerPort: 1433   
           env:
             - name: SA_PASSWORD
               value: "@someThingComplicated1234"
