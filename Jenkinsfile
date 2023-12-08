@@ -3,6 +3,7 @@ pipeline {
 
     stages {
         stage('Deploy to EKS') {
+            agent { label 'agentEKS' }
             steps {
                 dir('KUBE_MANIFEST') {
                     script {
