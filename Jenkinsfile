@@ -3,12 +3,7 @@ pipeline {
         label 'awsDeploy'
     }
 
-    environment {
-        DOCKERHUB_CREDENTIALS = credentials('dannydee93-dockerhub')
-        AWS_EKS_CLUSTER_NAME = 'final4cluster'
-        AWS_EKS_REGION = 'us-east-1'
-        KUBE_MANIFESTS_DIR = '/home/ubuntu/Final4Deployment/KUBE_MANIFEST'
-    }          
+
 
     stages {
         stage('Build Backend') {
