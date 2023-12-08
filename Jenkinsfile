@@ -19,22 +19,15 @@ pipeline {
             }
         }
         stage('Deploy to EKS') {
-            agent { label 'awsDeploy3' }
+            agent { label 'agentEKS' }
             steps {
                 script {
                     withCredentials([
                         string(credentialsId: 'AWS_ACCESS_KEY', variable: 'AWS_ACCESS_KEY_ID'),
                         string(credentialsId: 'AWS_SECRET_KEY', variable: 'AWS_SECRET_ACCESS_KEY')
                     ]) {
-                        try {
-                            sh "aws eks --region $AWS_EKS_REGION update-kubeconfig --name $AWS_EKS_CLUSTER_NAME"
-                            sh "kubectl apply -f $KUBE_MANIFESTS_DIR"
-                        } catch (Exception e) {
-                            // Handle deployment failure
-                            echo "Deployment to EKS failed: ${e.message}"
-                            currentBuild.result = 'FAILURE'
-                            error(e.message)
-                        }
+                        sh "aws eks --region $AWS_EKS_REGION update-kubeconfig --name $AWS_EKS_CLUSTER_NAME"
+                        sh "kubectl apply -f $KUBE_MANIFESTS_DIR"
                     }
                 }
             }
