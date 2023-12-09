@@ -1,7 +1,7 @@
-    pipeline {
-        agent any
+pipeline {
+    agent any
     
-    
+    stages {
         stage('Deploy to EKS') {
             agent { label 'agentEKS' }
             steps {
@@ -18,3 +18,4 @@
             }
         }
     }
+}
