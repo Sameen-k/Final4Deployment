@@ -17,6 +17,14 @@ spec:
           image: dannydee93/eshopwebmvc:latest
           ports:
             - containerPort: 80
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+
             
                    
 ---
