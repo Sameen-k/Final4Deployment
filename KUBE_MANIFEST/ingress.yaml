@@ -6,11 +6,14 @@ metadata:
         alb.ingress.kubernetes.io/scheme: internet-facing
         alb.ingress.kubernetes.io/target-type: instance
         alb.ingress.kubernetes.io/tags: Environment=staging
+        alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]' 
+        alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:123456:certificate/abc123-456def 
 
 spec:
   ingressClassName: alb
   rules:
-    - http:
+    - host: k8s-default-ecommerc-e15c8f8fd7-2072327459.us-east-1.elb.amazonaws.com
+      http:
         paths:
           - path: /
             pathType: Prefix
@@ -19,3 +22,19 @@ spec:
                 name: web-service
                 port:
                   number: 80
+
+
+---
+
+kind: Service 
+apiVersion: v1
+metadata:
+  name: web-service
+spec:
+  selector:
+    app: web 
+  ports:
+  - name: https 
+    protocol: TCP
+    port: 443 
+    targetPort: 80
