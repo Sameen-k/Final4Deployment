@@ -15,7 +15,7 @@ spec:
       http:
         paths:
           - path: /
-            pathType:
+            pathType: Prefix
             backend:
               service:
                 name: web-service
