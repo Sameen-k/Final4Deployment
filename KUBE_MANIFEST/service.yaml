@@ -14,7 +14,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: api
+  name: api-service
 spec:
   type: NodePort
   selector:
@@ -30,7 +30,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: sql-serverservice
+  name: sql-service
 spec:
   selector:
     app: sqlserver
