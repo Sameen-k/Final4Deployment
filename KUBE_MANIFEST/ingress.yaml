@@ -6,7 +6,7 @@ metadata:
         alb.ingress.kubernetes.io/scheme: internet-facing
         alb.ingress.kubernetes.io/target-type: instance
         alb.ingress.kubernetes.io/tags: Environment=staging
-        alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]' 
+    
 
 spec:
   ingressClassName: alb
