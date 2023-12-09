@@ -30,27 +30,16 @@ else{
     // Configure SQL Server (prod)
     var credential = new ChainedTokenCredential(new AzureDeveloperCliCredential(), new DefaultAzureCredential());
     builder.Configuration.AddAzureKeyVault(new Uri(builder.Configuration["AZURE_KEY_VAULT_ENDPOINT"] ?? ""), credential);
-    // Retrieve Catalog Connection String
-    var catalogConnectionString = builder.Configuration.GetConnectionString("CatalogConnection");
-    
-    // Check if the catalogConnectionString is not empty or null
-    if (!string.IsNullOrEmpty(catalogConnectionString)){
-        builder.Services.AddDbContext<CatalogContext>(c =>
-        {
-            c.UseSqlServer(catalogConnectionString, sqlOptions => sqlOptions.EnableRetryOnFailure());
-        });
-    }
-
-    // Retrieve Identity Connection String
-    var identityConnectionString = builder.Configuration.GetConnectionString("IdentityConnection");
-    
-    // Check if the identityConnectionString is not empty or null
-    if (!string.IsNullOrEmpty(identityConnectionString)){
-        builder.Services.AddDbContext<AppIdentityDbContext>(options =>
-        {
-            options.UseSqlServer(identityConnectionString, sqlOptions => sqlOptions.EnableRetryOnFailure());
-        });
-    }
+    builder.Services.AddDbContext<CatalogContext>(c =>
+    {
+        var connectionString = builder.Configuration[builder.Configuration["AZURE_SQL_CATALOG_CONNECTION_STRING_KEY"] ?? ""];
+        c.UseSqlServer(connectionString, sqlOptions => sqlOptions.EnableRetryOnFailure());
+    });
+    builder.Services.AddDbContext<AppIdentityDbContext>(options =>
+    {
+        var connectionString = builder.Configuration[builder.Configuration["AZURE_SQL_IDENTITY_CONNECTION_STRING_KEY"] ?? ""];
+        options.UseSqlServer(connectionString, sqlOptions => sqlOptions.EnableRetryOnFailure());
+    });
 }
 
 builder.Services.AddCookieSettings();
