@@ -13,7 +13,7 @@ spec:
         app: kestrel-frontend
     spec:
       containers:
-        - name: web
+        - name: kestrel-frontend
           image: dannydee93/eshopwebmvc:latest
           ports:
             - containerPort: 80
