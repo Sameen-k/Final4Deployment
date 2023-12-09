@@ -29,18 +29,28 @@ if (builder.Environment.IsDevelopment() || builder.Environment.EnvironmentName =
 else{
     // Configure SQL Server (prod)
     var credential = new ChainedTokenCredential(new AzureDeveloperCliCredential(), new DefaultAzureCredential());
-    builder.Services.AddDbContext<CatalogContext>(c =>
-    {
-        var catalogConnectionString = builder.Configuration["CatalogConnection"];
-        var connectionString = builder.Configuration.GetConnectionString("Server=(localdb)\\mssqllocaldb;Integrated Security=true;Initial Catalog=Microsoft.eShopOnWeb.CatalogDb;");
-        c.UseSqlServer(connectionString, sqlOptions => sqlOptions.EnableRetryOnFailure());
-    });
-    builder.Services.AddDbContext<AppIdentityDbContext>(options =>
-    {
-        var identityConnectionString = builder.Configuration["IdentityConnection"];
-        var connectionString = builder.Configuration.GetConnectionString("IdentityConnection": "Server=(localdb)\\mssqllocaldb;Integrated Security=true;Initial Catalog=Microsoft.eShopOnWeb.Identity;");
-        options.UseSqlServer(connectionString, sqlOptions => sqlOptions.EnableRetryOnFailure());
-    });
+    
+    // Retrieve Catalog Connection String
+    var catalogConnectionString = builder.Configuration.GetConnectionString("CatalogConnection");
+    
+    // Check if the catalogConnectionString is not empty or null
+    if (!string.IsNullOrEmpty(catalogConnectionString)){
+        builder.Services.AddDbContext<CatalogContext>(c =>
+        {
+            c.UseSqlServer(catalogConnectionString, sqlOptions => sqlOptions.EnableRetryOnFailure());
+        });
+    }
+
+    // Retrieve Identity Connection String
+    var identityConnectionString = builder.Configuration.GetConnectionString("IdentityConnection");
+    
+    // Check if the identityConnectionString is not empty or null
+    if (!string.IsNullOrEmpty(identityConnectionString)){
+        builder.Services.AddDbContext<AppIdentityDbContext>(options =>
+        {
+            options.UseSqlServer(identityConnectionString, sqlOptions => sqlOptions.EnableRetryOnFailure());
+        });
+    }
 }
 
 builder.Services.AddCookieSettings();
