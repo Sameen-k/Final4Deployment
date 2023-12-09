@@ -7,7 +7,6 @@ metadata:
         alb.ingress.kubernetes.io/target-type: instance
         alb.ingress.kubernetes.io/tags: Environment=staging
         alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]' 
-        alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:123456:certificate/abc123-456def 
 
 spec:
   ingressClassName: alb
