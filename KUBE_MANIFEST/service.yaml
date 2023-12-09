@@ -9,7 +9,7 @@ spec:
   ports: 
   - protocol: TCP 
     port: 80
-    targetPort: 80
+    targetPort: http
 ---
 apiVersion: v1
 kind: Service
@@ -22,17 +22,17 @@ spec:
   ports:
   - protocol: TCP 
     port: 80
-    targetPort: 80
+    targetPort: http
+  - protocol: TCP
+    port: 443
+    targetPort: http
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: sql-serverservice
+  name: sql-service
 spec:
   selector:
     app: sqlserver
-  ports:
-    - protocol: TCP
-      port: 1433
-      targetPort: 1433
+  
 
