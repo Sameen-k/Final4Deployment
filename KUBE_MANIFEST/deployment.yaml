@@ -5,12 +5,12 @@ metadata:
 spec:
   replicas: 2
   selector:
-    matchLabels: kestrel-frontend
-      app: web
+    matchLabels: 
+      app: kestrel-frontend
   template:
     metadata:
       labels:
-        app: web
+        app: kestrel-frontend
     spec:
       containers:
         - name: web
