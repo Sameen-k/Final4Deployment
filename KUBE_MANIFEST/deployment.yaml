@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: web-service
+  name: web-service-v2
 spec:
   replicas: 2
   selector:
