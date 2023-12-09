@@ -32,12 +32,14 @@ else{
     builder.Configuration.AddAzureKeyVault(new Uri(builder.Configuration["AZURE_KEY_VAULT_ENDPOINT"] ?? ""), credential);
     builder.Services.AddDbContext<CatalogContext>(c =>
     {
-        var connectionString = builder.Configuration.GetConnectionString("CatalogConnection");
+        var catalogConnectionString = builder.Configuration["CatalogConnection"];
+        var connectionString = builder.Configuration.GetConnectionString("Server=(localdb)\\mssqllocaldb;Integrated Security=true;Initial Catalog=Microsoft.eShopOnWeb.CatalogDb;");
         c.UseSqlServer(connectionString, sqlOptions => sqlOptions.EnableRetryOnFailure());
     });
     builder.Services.AddDbContext<AppIdentityDbContext>(options =>
     {
-        var connectionString = builder.Configuration.GetConnectionString("IdentityConnection");
+        var identityConnectionString = builder.Configuration["IdentityConnection"];
+        var connectionString = builder.Configuration.GetConnectionString("IdentityConnection": "Server=(localdb)\\mssqllocaldb;Integrated Security=true;Initial Catalog=Microsoft.eShopOnWeb.Identity;");
         options.UseSqlServer(connectionString, sqlOptions => sqlOptions.EnableRetryOnFailure());
     });
 }
