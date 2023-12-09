@@ -5,7 +5,7 @@ metadata:
 spec:
   replicas: 2
   selector:
-    matchLabels:
+    matchLabels: kestrel-frontend
       app: web
   template:
     metadata:
