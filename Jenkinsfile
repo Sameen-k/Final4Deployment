@@ -18,6 +18,8 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'dannydee93-dockerhub', usernameVariable: 'DOCKERHUB_CREDENTIALS_USR', passwordVariable: 'DOCKERHUB_CREDENTIALS_PSW')]) {
                     sh 'docker-compose build'
                     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                    export DOCKER_CLI_ADL_OPTS=""
+
 
                     dir('src/PublicApi') {
                         sh 'docker buildx build -t dannydee93/eshoppublicapi -f Dockerfile'
