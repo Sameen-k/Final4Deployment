@@ -39,7 +39,7 @@ pipeline {
                             string(credentialsId: 'AWS_SECRET_KEY', variable: 'aws_secret_key')
                         ]) {
                             sh "aws eks --region $AWS_EKS_REGION update-kubeconfig --name $AWS_EKS_CLUSTER_NAME"
-                            sh "kubectl apply -f $KUBE_MANIFESTS_DIR"
+                            sh "kubectl apply -f deployment.yaml && kubectl apply -f service.yaml && kubectl apply -f ingress.yaml"
                         }
                     }
                 }
