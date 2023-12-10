@@ -5,7 +5,7 @@ pipeline {
     }
 
     environment {
-        AWS_EKS_CLUSTER_NAME = 'clusterdd'
+        AWS_EKS_CLUSTER_NAME = 'cluster4v4'
         AWS_EKS_REGION = 'us-east-1'
         KUBE_MANIFESTS_DIR = '/home/ubuntu/Final4Deployment/KUBE_MANIFEST'
     }
