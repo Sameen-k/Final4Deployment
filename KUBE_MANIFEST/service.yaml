@@ -49,4 +49,4 @@ spec:
   selector:
     app: azure-key-vault-endpoint
 
-              app: eshoppublicapi
+            
