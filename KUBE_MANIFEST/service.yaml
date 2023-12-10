@@ -54,7 +54,7 @@ kind: Service
 metadata:
   labels:
     app.kubernetes.io/name: aws-load-balancer-controller
-  name: aws-load-balancer-webhook-service
+  name: aws-load-balancer-webhook-service-v2
   namespace: kube-system
 spec:
   ports:
