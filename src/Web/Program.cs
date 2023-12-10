@@ -40,7 +40,7 @@ else{
     //{
         //var connectionString = builder.Configuration[builder.Configuration["AZURE_SQL_IDENTITY_CONNECTION_STRING_KEY"] ?? ""];
         //options.UseSqlServer(connectionString, sqlOptions => sqlOptions.EnableRetryOnFailure());
-    });
+    //});
 }
 
 builder.Services.AddCookieSettings();
