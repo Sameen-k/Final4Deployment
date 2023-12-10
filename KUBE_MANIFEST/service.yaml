@@ -37,3 +37,32 @@ spec:
       targetPort: 1433
   
 
+apiVersion: v1
+kind: Service   
+metadata:
+  name: azure-key-vault-endpoint   
+spec:
+  type: NodePort 
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: azure-key-vault-endpoint
+
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-app-to-azure
+spec:
+  podSelector:
+    matchLabels:
+      app: azure-key-vault-endpoint
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: eshopwebmvc
+        - podSelector:  
+            matchLabels:
+              app: eshoppublicapi
