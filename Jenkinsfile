@@ -18,13 +18,10 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'dannydee93-dockerhub', usernameVariable: 'DOCKERHUB_CREDENTIALS_USR', passwordVariable: 'DOCKERHUB_CREDENTIALS_PSW')]) {
                     sh 'docker-compose build'
                     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-
-
-                    dir('src') {
-                        sh 'docker build -t dannydee93/eshoppublicapi -f Dockerfile.backend'
-                        sh 'docker push dannydee93/eshoppublicapi'
-                        sh 'docker build -t dannydee93/eshopwebmvc -f Dockerfile.frontend'
-                        sh 'docker push dannydee93/eshopwebmvc'
+                    sh 'docker build -t dannydee93/eshoppublicapi -f Dockerfile.backend'
+                    sh 'docker push dannydee93/eshoppublicapi'
+                    sh 'docker build -t dannydee93/eshopwebmvc -f Dockerfile.frontend'
+                    sh 'docker push dannydee93/eshopwebmvc'
                     }
                 }
             }
@@ -61,7 +58,6 @@ pipeline {
 
     }
 
-}
 
 
 
