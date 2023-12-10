@@ -42,7 +42,7 @@ spec:
       - name: api
         image: dannydee93/eshoppublicapi:latest  
         env:
-          - name: Azure__KeyVault__Endpoint
+          - name: AZURE_KEY_VAULT_ENDPOINT
             value: k8s-default-ecommerc-e15c8f8fd7-2072327459.us-east-1.elb.amazonaws.com
         ports:
         - containerPort: 80
