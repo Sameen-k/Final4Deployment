@@ -6,14 +6,14 @@ spec:
   replicas: 2
   selector:
     matchLabels: 
-      app: eshopwebmvc
+      app: kestrel-frontend
   template:
     metadata:
       labels:
-        app: eshopwebmvc
+        app: kestrel-frontend
     spec:
       containers:
-        - name: eshopwebmvc
+        - name:kestrel-frontend
           image: dannydee93/eshopwebmvc:latest
           ports:
             - containerPort: 80
@@ -33,6 +33,10 @@ kind: Deployment
 metadata:
   name: api-service 
 spec:
+  replicas: 2
+  selector:
+    matchLabels: 
+      app: api
   template:
     metadata:  
       labels:
