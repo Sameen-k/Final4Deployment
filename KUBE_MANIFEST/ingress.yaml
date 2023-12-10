@@ -5,20 +5,19 @@ metadata:
     annotations:
         alb.ingress.kubernetes.io/scheme: internet-facing
         alb.ingress.kubernetes.io/target-type: instance
-        alb.ingress.kubernetes.io/tags: Environment=staging
     
 
 spec:
   ingressClassName: alb
   rules:
-    - host: k8s-default-ecommerc-e15c8f8fd7-2072327459.us-east-1.elb.amazonaws.com
+    - host: k8s-default-ecommerc-82ce20c3f4-1378770920.us-east-1.elb.amazonaws.com
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: web-service
+                name: web-service-v2
                 port:
                   number: 80
 
