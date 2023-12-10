@@ -49,20 +49,4 @@ spec:
   selector:
     app: azure-key-vault-endpoint
 
-
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: allow-app-to-azure
-spec:
-  podSelector:
-    matchLabels:
-      app: azure-key-vault-endpoint
-  ingress:
-    - from:
-        - podSelector:
-            matchLabels:
-              app: eshopwebmvc
-        - podSelector:  
-            matchLabels:
               app: eshoppublicapi
