@@ -20,12 +20,12 @@ pipeline {
                     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
 
                     dir('src/PublicApi') {
-                        sh 'docker build -t dannydee93/eshoppublicapi -f Dockerfile'
+                        sh 'docker build -t dannydee93/eshoppublicapi -f Dockerfile .'
                         sh 'docker push dannydee93/eshoppublicapi'
                     }
 
                     dir('src/Web') {
-                        sh 'docker build -t dannydee93/eshopwebmvc -f Dockerfile'
+                        sh 'docker build -t dannydee93/eshopwebmvc -f Dockerfile .'
                         sh 'docker push dannydee93/eshopwebmvc'
                     }
                 }
