@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        label 'agentDocker'
-    }
+    agent any
 
     environment {
         AWS_EKS_CLUSTER_NAME = 'cluster4v4'
@@ -9,6 +7,7 @@ pipeline {
         KUBE_MANIFESTS_DIR = '/home/ubuntu/Final4Deployment/KUBE_MANIFEST'
     }
 
+    stages {
         stage('Deploy to EKS') {
             agent {
                 label 'agentEKS'
@@ -29,3 +28,5 @@ pipeline {
             }
         }
     }
+}
+
