@@ -36,7 +36,7 @@ spec:
     - from:
         - podSelector:
             matchLabels:
-              app: eshopwebmvc
+              app: kestrel-frontend
         - podSelector:  
             matchLabels:
-              app: eshoppublicapi
+              app: api
