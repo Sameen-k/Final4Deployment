@@ -1,63 +1,51 @@
 pipeline {
 
-    agent { 
+    agent {
         label 'agentDocker'
     }
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('dannydee93-dockerhub')  
         AWS_EKS_CLUSTER_NAME = 'clusterdd'
         AWS_EKS_REGION = 'us-east-1'
-        KUBE_MANIFESTS_DIR = '/home/ubuntu/Final4Deployment/KUBE_MANIFEST' 
+        KUBE_MANIFESTS_DIR = '/home/ubuntu/Final4Deployment/KUBE_MANIFEST'
     }
 
     stages {
 
-        stage('Build API') {
+        stage('Build images') {
 
             steps {
-                
-                sh 'docker-compose build'
-                sh 'docker-compose up'
-                
-                dir('src/PublicApi') {
-                    sh 'docker build -t dannydee93/eshoppublicapi -f Dockerfile'  
+                withCredentials([usernamePassword(credentialsId: 'dannydee93-dockerhub', usernameVariable: 'DOCKERHUB_CREDENTIALS_USR', passwordVariable: 'DOCKERHUB_CREDENTIALS_PSW')]) {
+                    sh 'docker-compose build'
+                    sh 'docker-compose up'
                     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                    sh 'docker push dannydee93/eshoppublicapi'
-                }
 
+                    dir('src/PublicApi') {
+                        sh 'docker build -t dannydee93/eshoppublicapi -f Dockerfile'
+                        sh 'docker push dannydee93/eshoppublicapi'
+                    }
+
+                    dir('src/Web') {
+                        sh 'docker build -t dannydee93/eshopwebmvc -f Dockerfile'
+                        sh 'docker push dannydee93/eshopwebmvc'
+                    }
+                }
             }
 
         }
-        
-
-        stage('Build WEB') {
-
-            steps {
-                
-                dir('src/Web') {
-                    sh 'docker build -t dannydee93/eshopwebmvc -f Dockerfile' 
-                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                    sh 'docker push dannydee93/eshopwebmvc'
-                }
-
-            }
-            
-        }
-        
 
         stage('Deploy to EKS') {
 
-            agent { 
-                label 'agentEKS' 
+            agent {
+                label 'agentEKS'
             }
-            
+
             steps {
-                
+
                 dir('KUBE_MANIFEST') {
-                
+
                     script {
-                    
+
                         withCredentials([
                             string(credentialsId: 'AWS_ACCESS_KEY', variable: 'aws_access_key'),
                             string(credentialsId: 'AWS_SECRET_KEY', variable: 'aws_secret_key')
@@ -65,9 +53,9 @@ pipeline {
                             sh "aws eks --region $AWS_EKS_REGION update-kubeconfig --name $AWS_EKS_CLUSTER_NAME"
                             sh "kubectl apply -f $KUBE_MANIFESTS_DIR"
                         }
-                        
+
                     }
-                    
+
                 }
 
             }
@@ -77,7 +65,6 @@ pipeline {
     }
 
 }
-    
 
 
 
