@@ -1,10 +1,6 @@
 pipeline {
     agent {
-        docker {
-            image 'jenkins/inbound-agent:4.7-1'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
+    
 
     stages {
         
@@ -36,4 +32,5 @@ pipeline {
             }
         }
     }
+}
 }
