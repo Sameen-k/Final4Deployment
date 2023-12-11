@@ -14,11 +14,17 @@ spec:
     spec:
       containers:
       - name: eshopwebmvc
-        image: dannydee93/eshopwebmvc
+        image: dannydee93/eshopwebmvc:latest
         ports:
-        - containerPort: 80
-        - containerPort: 443
-        
+        - name: http
+          containerPort: 80  
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+          requests:
+            cpu: "250m"
+            memory: "256Mi"
 
 ---
 
@@ -38,11 +44,15 @@ spec:
     spec:
       containers:
       - name: eshoppublicapi
-        image: dannydee93/eshoppublicapi
-        # Add other container configuration as needed
-        # ...
+        image: dannydee93/eshoppublicapi:latest
+        ports:
+        - name: http
+          containerPort: 80
+        - name: https
+          containerPort: 443
 
 ---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -69,5 +79,3 @@ spec:
           value: "@someThingComplicated1234"
         - name: ACCEPT_EULA
           value: "Y"
-
----
