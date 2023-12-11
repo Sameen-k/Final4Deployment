@@ -21,7 +21,7 @@ spec:
     app: api
   ports:
   - protocol: TCP 
-    port: 443
+    port: 5200
     targetPort: 80
 ---
   
