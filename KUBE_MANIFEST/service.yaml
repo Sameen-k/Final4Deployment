@@ -8,7 +8,7 @@ spec:
     app: web
   ports: 
   - protocol: TCP 
-    port: 80
+    port: 5106
     targetPort: 80
 ---
 apiVersion: v1
