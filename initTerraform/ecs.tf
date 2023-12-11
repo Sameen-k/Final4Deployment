@@ -1,9 +1,4 @@
-# AWS Provider
-provider "aws" {
-  access_key = var.aws_access_key
-  secret_key = var.aws_secret_key
-  region     = "us-east-1"
-}
+
 
 # ECS Cluster
 resource "aws_ecs_cluster" "final4cluster" {
@@ -66,8 +61,8 @@ resource "aws_ecs_service" "aws-ecs-api-service" {
   force_new_deployment = true
   network_configuration {
     subnets            = [
-      aws_subnet.privateA.id
-      aws_subnet.privateB.id
+      aws_subnet.privateA.id,
+      aws_subnet.privateB.id,
       aws_subnet.privateC.id
     ]
     assign_public_ip   = false
