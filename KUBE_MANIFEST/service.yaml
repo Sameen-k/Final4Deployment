@@ -22,7 +22,7 @@ spec:
   ports:
     - protocol: TCP
       port: 5200
-      targetPort: 80
+      targetPort: 443
 
 ---
 apiVersion: v1
