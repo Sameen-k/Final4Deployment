@@ -1,61 +1,49 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: web-service-v2
+  name: eshopwebmvc-deployment
 spec:
-  replicas: 2
+  replicas: 3
   selector:
-    matchLabels: 
-      app: web
+    matchLabels:
+      app: eshopwebmvc
   template:
     metadata:
       labels:
-        app: web
+        app: eshopwebmvc
     spec:
       containers:
-        - name: web
-          image: dannydee93/eshopwebmvc:latest
-          ports:
-            - name: http
-              containerPort: 80  
-          resources:
-            limits:
-              cpu: "500m"
-              memory: "512Mi"
-            requests:
-              cpu: "250m"
-              memory: "256Mi"
+      - name: eshopwebmvc
+        image: dannydee93/eshopwebmvc
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+        # Add other container configuration as needed
+        # ...
 
-            
-                   
 ---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api-service 
+  name: eshoppublicapi-deployment
 spec:
-  replicas: 2
+  replicas: 3
   selector:
-    matchLabels: 
-      app: api
+    matchLabels:
+      app: eshoppublicapi
   template:
-    metadata:  
+    metadata:
       labels:
-        app: api
+        app: eshoppublicapi
     spec:
       containers:
-      - name: api
-        image: dannydee93/eshoppublicapi:latest  
-        env:
-          - name: AZURE_KEY_VAULT_ENDPOINT
-            value: k8s-default-ecommerc-82ce20c3f4-1378770920.us-east-1.elb.amazonaws.com
-        ports:
-            - name: http
-              containerPort: 80
-              containerPort: 433
+      - name: eshoppublicapi
+        image: dannydee93/eshoppublicapi
+        # Add other container configuration as needed
+        # ...
 
 ---
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
