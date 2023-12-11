@@ -1,14 +1,8 @@
 pipeline {
-    agent {
-                label 'agentDocker'
-            }
-    environment {
-        DOCKERHUB_CREDENTIALS = credentials('dannydee93-dockerhub')
-    }
-    
+    agent any    
     stages {
-        
         stage('Login and Push') {
+            agent {label 'agentDocker'}
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dannydee93-dockerhub', usernameVariable: 'DOCKERHUB_CREDENTIALS_USR', passwordVariable: 'DOCKERHUB_CREDENTIALS_PSW')]) {
                     sh "echo \$DOCKERHUB_CREDENTIALS_PSW | docker login -u \$DOCKERHUB_CREDENTIALS_USR --password-stdin"
@@ -17,11 +11,8 @@ pipeline {
                 }
             }
         }
-
         stage('Init Terraform') {
-            agent {
-                label 'agentTerraform'
-            }
+            agent {label 'agentTerraform'}
             steps {
                 withCredentials([
                     string(credentialsId: 'AWS_ACCESS_KEY', variable: 'aws_access_key'),
