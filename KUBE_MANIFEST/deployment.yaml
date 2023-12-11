@@ -16,7 +16,8 @@ spec:
         - name: web
           image: dannydee93/eshopwebmvc:latest
           ports:
-            - containerPort: 80
+            - name: http
+              containerPort: 80  
           resources:
             limits:
               cpu: "500m"
@@ -47,9 +48,10 @@ spec:
         image: dannydee93/eshoppublicapi:latest  
         env:
           - name: AZURE_KEY_VAULT_ENDPOINT
-            value: k8s-default-ecommerc-e15c8f8fd7-2072327459.us-east-1.elb.amazonaws.com
+            value: k8s-default-ecommerc-82ce20c3f4-1378770920.us-east-1.elb.amazonaws.com
         ports:
-        - containerPort: 80
-        - containerPort: 443
+            - name: http
+              containerPort: 80
+              containerPort: 433
 
 ---
