@@ -1,5 +1,5 @@
 pipeline {
-    agent any 
+    agent any
     stages {
         stage('Build Images') {
             agent {
@@ -7,11 +7,8 @@ pipeline {
             }
             steps {
                 sh 'docker-compose build'
-                //sh 'docker-compose -f /home/ubuntu/agent1/workspace/final_Annie-working/docker-compose.yml build'
             }
         }
-    }
-    stages {
         stage('Login and Push') {
             agent {
                 label 'agentDocker'
@@ -21,23 +18,6 @@ pipeline {
                     sh "echo \$DOCKERHUB_CREDENTIALS_PSW | docker login -u \$DOCKERHUB_CREDENTIALS_USR --password-stdin"
                     sh 'docker push dannydee93/eshopwebmvc'
                     sh 'docker push dannydee93/eshoppublicapi'
-                }
-            }
-        }
-        stage('Init Terraform') {
-            agent {
-                label 'agentTerraform'
-            }
-            steps {
-                withCredentials([
-                    string(credentialsId: 'AWS_ACCESS_KEY', variable: 'aws_access_key'),
-                    string(credentialsId: 'AWS_SECRET_KEY', variable: 'aws_secret_key')
-                ]) {
-                    dir('initTerraform') {
-                        sh 'terraform init'
-                        sh 'terraform plan -out plan.tfplan -var="aws_access_key=$aws_access_key" -var="aws_secret_key=$aws_secret_key"'
-                        sh 'terraform apply plan.tfplan'
-                    }
                 }
             }
         }
