@@ -18,6 +18,15 @@ spec:
         ports:
         - name: http
           containerPort: 80  
+        env:
+        - name: DB_HOST
+          value: "sqlserver-service"  # Use the service name
+        - name: DB_PORT
+          value: "1433"  # SQL Server port
+        - name: DB_USER
+          value: "SA"
+        - name: DB_PASSWORD
+          value: "@someThingComplicated1234"
         resources:
           limits:
             cpu: "500m"
@@ -46,8 +55,6 @@ spec:
       - name: eshoppublicapi
         image: dannydee93/eshoppublicapi:latest
         ports:
-        - name: http
-          containerPort: 80
         - name: https
           containerPort: 443
 
