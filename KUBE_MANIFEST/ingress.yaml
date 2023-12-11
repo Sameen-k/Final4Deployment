@@ -22,20 +22,3 @@ spec:
                   number: 80
 
 
----
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: azure-key-vault-endpoint
-spec:
-  podSelector:
-    matchLabels:
-      app: azure-key-vault-endpoint
-  ingress:
-    - from:
-        - podSelector:
-            matchLabels:
-              app: web
-        - podSelector:  
-            matchLabels:
-              app: api
