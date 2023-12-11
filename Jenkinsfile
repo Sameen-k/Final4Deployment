@@ -1,9 +1,12 @@
 pipeline {
     agent {
-        label 'agentDocker'
+        docker {
+            image 'jenkins/inbound-agent:4.7-1'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
     }
 
- stages {
+    stages {
         stage('Build Images') {
             steps {
                 sh 'docker-compose build'
@@ -19,22 +22,23 @@ pipeline {
                 }
             }
         }
-         stage('Init Terraform') {
-            agent {  
+
+        stage('Init Terraform') {
+            agent {
                 label 'agentTerraform'
             }
             steps {
                 withCredentials([
-                    string(credentialsId: 'AWS_ACCESS_KEY', variable: 'aws_access_key'),  
+                    string(credentialsId: 'AWS_ACCESS_KEY', variable: 'aws_access_key'),
                     string(credentialsId: 'AWS_SECRET_KEY', variable: 'aws_secret_key')
                 ]) {
                     dir('initTerraform') {
                         sh 'terraform init'
-                        sh 'terraform plan -out plan.tfplan -var="aws_access_key=$aws_access_key" -var="aws_secret_key=$aws_secret_key"' 
+                        sh 'terraform plan -out plan.tfplan -var="aws_access_key=$aws_access_key" -var="aws_secret_key=$aws_secret_key"'
                         sh 'terraform apply plan.tfplan'
                     }
                 }
             }
         }
-     }
+    }
 }
