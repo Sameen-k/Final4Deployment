@@ -1,7 +1,6 @@
 pipeline {
-    agent {
+    agent any
     
-
     stages {
         
         stage('Login and Push') {
@@ -33,4 +32,5 @@ pipeline {
         }
     }
 }
+
 }
