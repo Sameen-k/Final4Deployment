@@ -2,6 +2,9 @@ pipeline {
     agent {
                 label 'agentDocker'
             }
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('dannydee93-dockerhub')
+    }
     
     stages {
         
