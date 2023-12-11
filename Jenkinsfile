@@ -7,12 +7,7 @@ pipeline {
     }
 
     stages {
-        stage('Build Images') {
-            steps {
-                sh 'docker-compose build'
-            }
-        }
-
+        
         stage('Login and Push') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dannydee93-dockerhub', usernameVariable: 'DOCKERHUB_CREDENTIALS_USR', passwordVariable: 'DOCKERHUB_CREDENTIALS_PSW')]) {
