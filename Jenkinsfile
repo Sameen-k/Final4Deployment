@@ -25,7 +25,9 @@ pipeline {
             }
         }
         stage('Deploy to EKS') {
-            agent { label 'agentEKS' }
+            agent { 
+                label 'agentEKS' 
+            }
             steps {
                 dir('KUBE_MANIFEST') {
                     script {
@@ -34,7 +36,7 @@ pipeline {
                             string(credentialsId: 'AWS_SECRET_KEY', variable: 'AWS_SECRET_ACCESS_KEY')
                         ]) {
                             sh "aws eks --region us-west-1 update-kubeconfig --name cluster01"
-                            sh "kubectl apply -f deployment.yaml && kubectl apply -f service.yaml && kubectl apply -f ingress.yaml && ingressClass.yaml"
+                            sh "kubectl apply -f deployment.yaml && kubectl apply -f service.yaml && kubectl apply -f ingress.yaml && kubectl apply -f ingressClass.yaml"
                         }
                     }
                 }
