@@ -6,8 +6,8 @@ pipeline {
                 label 'agentDocker'
             }
             steps {
-                sh 'echo "y" | docker system prune -a'
-                sh 'echo "y" | docker volume prune'                
+                sh 'docker system prune -a'
+                sh 'docker volume prune'
                 sh 'docker-compose build'
             }
         }
@@ -23,19 +23,18 @@ pipeline {
                 }
             }
         }
-        stage('Init Terraform') {
-            agent {
-                label 'agentTerraform'
-            }
+        stage('Deploy to EKS') {
+            agent { label 'agentEKS' }
             steps {
-                withCredentials([
-                    string(credentialsId: 'AWS_ACCESS_KEY', variable: 'aws_access_key'),
-                    string(credentialsId: 'AWS_SECRET_KEY', variable: 'aws_secret_key')
-                ]) {
-                    dir('initTerraform') {
-                        sh 'terraform init'
-                        sh 'terraform plan -out plan.tfplan -var="aws_access_key=$aws_access_key" -var="aws_secret_key=$aws_secret_key"'
-                        sh 'terraform apply plan.tfplan'
+                dir('KUBE_MANIFEST') {
+                    script {
+                        withCredentials([
+                            string(credentialsId: 'AWS_ACCESS_KEY', variable: 'AWS_ACCESS_KEY_ID'),
+                            string(credentialsId: 'AWS_SECRET_KEY', variable: 'AWS_SECRET_ACCESS_KEY')
+                        ]) {
+                            sh "aws eks --region us-east-1 update-kubeconfig --name cluster01"
+                            sh "kubectl apply -f deployment.yaml && kubectl apply -f service.yaml && kubectl apply -f ingress.yaml"
+                        }
                     }
                 }
             }
