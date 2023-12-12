@@ -1,5 +1,3 @@
-
-
 # ECS Cluster
 resource "aws_ecs_cluster" "final4cluster" {
   name = "final4cluster"
@@ -16,15 +14,14 @@ resource "aws_cloudwatch_log_group" "F4logs" {
   }
 }
 
-
 # ECS Task Definition for BACKEND
 resource "aws_ecs_task_definition" "aws-ecs-api-task" {
   family                   = "api-task"
   container_definitions   = <<EOF
 [
   {
-    "name": "API-container",
-    "image": "dannydee93/eshoppublicapi",
+    "name": "api-container",
+    "image": "dannydee93/eshoppublicapi:latest",
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
@@ -66,7 +63,7 @@ resource "aws_ecs_service" "aws-ecs-api-service" {
       aws_subnet.privateC.id
     ]
     assign_public_ip   = false
-    security_groups    = [sg-01f1382b32a3a784d]
+    security_groups    = ["sg-034a7825c8f4afd26"]
   }
   load_balancer {
     target_group_arn = aws_lb_target_group.target_group.arn
@@ -82,7 +79,7 @@ resource "aws_ecs_task_definition" "aws-ecs-web-task" {
 [
   {
     "name": "web-container",
-    "image": "dannydee93/eshopwebmvc",
+    "image": "dannydee93/eshopwebmvc:latest",
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
@@ -120,10 +117,10 @@ resource "aws_ecs_service" "aws-ecs-web-service" {
     subnets            = [
       aws_subnet.publicA.id,
       aws_subnet.publicB.id,
-      aws_subnet.publiC.id
+      aws_subnet.publicC.id
     ]
     assign_public_ip   = true
-    security_groups    = [sg-01f1382b32a3a784d]
+    security_groups    = ["sg-034a7825c8f4afd26"]
   }
   load_balancer {
     target_group_arn = aws_lb_target_group.target_group.arn
