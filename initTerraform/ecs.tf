@@ -7,7 +7,7 @@ resource "aws_ecs_cluster" "final4cluster" {
 }
 
 resource "aws_cloudwatch_log_group" "F4logs" {
-  name = "/ecs/D8-logs"
+  name = "/ecs/F4-logs"
 
   tags = {
     Application = "F4logs"
