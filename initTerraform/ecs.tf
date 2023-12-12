@@ -63,7 +63,7 @@ resource "aws_ecs_service" "aws-ecs-api-service" {
       aws_subnet.privateC.id
     ]
     assign_public_ip   = false
-    security_groups    = [backend_sg]
+    security_groups    = [aws_security_group.backend_sg.id]
   }
   load_balancer {
     target_group_arn = aws_lb_target_group.target_group.arn
@@ -120,7 +120,7 @@ resource "aws_ecs_service" "aws-ecs-web-service" {
       aws_subnet.publicC.id
     ]
     assign_public_ip   = true
-    security_groups    = [frontend_sg]
+    security_groups    = [aws_security_group.frontend_sg.id]
   }
   load_balancer {
     target_group_arn = aws_lb_target_group.target_group.arn
