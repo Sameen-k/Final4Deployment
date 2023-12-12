@@ -1,2 +1,2 @@
-aws_access_key = ""
-aws_secret_key = ""
+access_key = ""
+secret_key = ""
