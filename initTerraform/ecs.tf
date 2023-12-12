@@ -63,7 +63,7 @@ resource "aws_ecs_service" "aws-ecs-api-service" {
       aws_subnet.privateC.id
     ]
     assign_public_ip   = false
-    security_groups    = ["sg-034a7825c8f4afd26"]
+    security_groups    = [backend_sg]
   }
   load_balancer {
     target_group_arn = aws_lb_target_group.target_group.arn
@@ -120,7 +120,7 @@ resource "aws_ecs_service" "aws-ecs-web-service" {
       aws_subnet.publicC.id
     ]
     assign_public_ip   = true
-    security_groups    = ["sg-034a7825c8f4afd26"]
+    security_groups    = [frontend_sg]
   }
   load_balancer {
     target_group_arn = aws_lb_target_group.target_group.arn
@@ -128,3 +128,80 @@ resource "aws_ecs_service" "aws-ecs-web-service" {
     container_port   = 80
   }
 }
+
+# Security Group for Backend Service
+resource "aws_security_group" "backend_sg" {
+  name        = "backend-sg"
+  description = "Security group for backend service"
+  vpc_id      = aws_vpc.your_vpc.id  # Replace with your VPC ID
+
+  # Ingress rules
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 8000
+    to_port     = 8000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Add egress rules and tags
+}
+
+# Security Group for Frontend Service
+resource "aws_security_group" "frontend_sg" {
+  name        = "frontend-sg"
+  description = "Security group for frontend service"
+  vpc_id      = aws_vpc.your_vpc.id  # Replace with your VPC ID
+
+  # Ingress rules (same as backend)
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 8000
+    to_port     = 8000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Add egress rules and tags
+}
+
