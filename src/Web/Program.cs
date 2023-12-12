@@ -32,7 +32,7 @@ else{
     builder.Configuration.AddAzureKeyVault(new Uri(builder.Configuration["AZURE_KEY_VAULT_ENDPOINT"] ?? ""), credential);
     builder.Services.AddDbContext<CatalogContext>(c =>
     {
-        var connectionString = builder.Configuration[builder.Configuration["AZURE_SQL_CATALOG_CONNECTION_STRING_KEY"] ?? ""];
+        var connectionString = builder.Configuration[builder.Configuration["AZURE_SQL_CATALOG_CONNECTION_STRING_KEY"] ?? "https://kura-final-keyvault.vault.azure.net/"];
         c.UseSqlServer(connectionString, sqlOptions => sqlOptions.EnableRetryOnFailure());
     });
     builder.Services.AddDbContext<AppIdentityDbContext>(options =>
