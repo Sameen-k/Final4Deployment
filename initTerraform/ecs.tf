@@ -133,7 +133,7 @@ resource "aws_ecs_service" "aws-ecs-web-service" {
 resource "aws_security_group" "backend_sg" {
   name        = "backend-sg"
   description = "Security group for backend service"
-  vpc_id      = aws_vpc.your_vpc.id  # Replace with your VPC ID
+  vpc_id      = aws_vpc.final4_vpc.id  # Replace with your VPC ID
 
   # Ingress rules
   ingress {
@@ -171,7 +171,7 @@ resource "aws_security_group" "backend_sg" {
 resource "aws_security_group" "frontend_sg" {
   name        = "frontend-sg"
   description = "Security group for frontend service"
-  vpc_id      = aws_vpc.your_vpc.id  # Replace with your VPC ID
+  vpc_id      = aws_vpc.final4_vpc.id  # Replace with your VPC ID
 
   # Ingress rules (same as backend)
   ingress {
