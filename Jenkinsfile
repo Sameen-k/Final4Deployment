@@ -6,6 +6,8 @@ pipeline {
                 label 'agentDocker'
             }
             steps {
+                sh 'docker system prune -a'
+                sh 'docker volume prune'                
                 sh 'docker-compose build'
             }
         }
